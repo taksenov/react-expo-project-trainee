@@ -1,0 +1,17 @@
+{
+  "name": "edds-data",
+  "version": "0.0.1",
+  "description": "Data for belEdds processes",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "taksenov@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.4"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0"
+  }
+}
