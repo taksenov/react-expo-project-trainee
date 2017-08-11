@@ -2,8 +2,16 @@ import express from 'express';
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.get('/notes', (req, res) => {
+
+});
+
+app.post('/notes', (req, res) => {
+
+});
+
+app.delete('/notes/:id', (req, res) => {
+
 });
 
 const SERVER_PORT = 8080;
