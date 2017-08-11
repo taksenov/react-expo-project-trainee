@@ -9,7 +9,8 @@
   "author": "taksenov@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "mongoose": "^4.11.6"
   },
   "devDependencies": {
     "babel": "^6.23.0",
