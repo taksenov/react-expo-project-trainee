@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // const Schema = mongoose.Schema;
-import { Schema } from 'models/mongooseSchema';
+import {Schema} from './mongooseSchema.js';
 
 const NoteSchema = new Schema({
     title     : {type: String},

@@ -5,7 +5,10 @@ import '../models/Note';
 const Note = mongoose.model('Note');
 
 export function setUpConnection() {
-    mongoose.connect('mongodb://localhost/notes');
+    mongoose.Promise = global.Promise; // workAround from https://github.com/Automattic/mongoose/issues/4291
+    mongoose.connect('mongodb://localhost/notes', {
+        useMongoClient: true,
+    });
 } //setUpConnection
 
 export function listNotes() {
