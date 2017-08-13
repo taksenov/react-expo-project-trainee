@@ -11,15 +11,28 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
+    "less": "^2.7.2",
     "mongoose": "^4.11.6",
-    "mpromise": "^0.5.5"
+    "mpromise": "^0.5.5",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.4",
     "eslint": "^4.4.1",
-    "eslint-plugin-react": "^7.2.0"
+    "eslint-plugin-react": "^7.2.0",
+    "file-loader": "^0.11.2",
+    "json-loader": "^0.5.7",
+    "less-loader": "^4.0.5",
+    "react-hot-loader": "^1.3.1",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.5.4",
+    "webpack-dev-server": "^2.7.1"
   }
 }
