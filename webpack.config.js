@@ -3,15 +3,15 @@ var webpack = require('webpack');
 module.exports = {
     entry: "./client/main.js",
     output: {
-        path: __dirname + '/public/build/',
-        publicPath: "build/",
+        path: __dirname + '/public/build/js/',
+        publicPath: "build/js/",
         filename: "bundle.js"
     },
     module: {
         loaders: [
             {
                 test: /\.js$/,
-                loader: "babel",
+                loader: "babel-loader",
                 exclude: [/node_modules/, /public/]
             },
             {
@@ -21,9 +21,24 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                loader: "style-loader!css-loader!autoprefixer-loader!less",
+                // loader: "style-loader!css-loader!autoprefixer-loader!less",
+                loader: "style-loader!css-loader!autoprefixer-loader!less-loader",
                 exclude: [/node_modules/, /public/]
             },
+            
+            // Fonts loaders ======================================
+            {
+                test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                // Limiting the size of the woff fonts breaks font-awesome ONLY for the extract text plugin
+                // loader: "url?limit=10000"
+                use: "url-loader"
+            },
+            {
+                test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+                use: 'file-loader'
+            },
+            // Fonts loaders ======================================
+            
             {
                 test: /\.gif$/,
                 loader: "url-loader?limit=10000&mimetype=image/gif"
@@ -42,13 +57,25 @@ module.exports = {
             },
             {
                 test: /\.jsx$/,
-                loader: "react-hot!babel",
+                loader: "react-hot!babel-loader",
                 exclude: [/node_modules/, /public/]
             },
             {
                 test: /\.json$/,
                 loader: "json-loader"
+            },
+            { 
+                test: /bootstrap.+\.(jsx|js)$/, 
+                loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window' 
             }
         ]
-    }
+    },
+    // IDEA: If need jQuery for others stuff use this instead bootstrap loader
+    // plugins:[
+    //     new webpack.ProvidePlugin({   
+    //         jQuery: 'jquery',
+    //         $: 'jquery',
+    //         jquery: 'jquery'
+    //     })
+    // ]
 }

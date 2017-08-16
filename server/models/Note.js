@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-// const Schema = mongoose.Schema;
 import {Schema} from './mongooseSchema.js';
 
 const NoteSchema = new Schema({
