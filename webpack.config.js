@@ -70,7 +70,7 @@ module.exports = {
             }
         ]
     },
-    // If need jQuery for others stuff use this instead bootstrap loader
+    // IDEA: If need jQuery for others stuff use this instead bootstrap loader
     // plugins:[
     //     new webpack.ProvidePlugin({   
     //         jQuery: 'jquery',
