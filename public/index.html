@@ -5,32 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ЕДДС Белоярский район</title>
-    <link rel="stylesheet" href="build/css/style.css" type="text/css">
 </head>
 <body>
-    
-    <div class="panel panel-danger">
-        <div class="panel-heading">
-            <h3 class="panel-title">Panel danger</h3>
-        </div>
-        <div class="panel-body">
-            TEST content
-            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-        </div>
-    </div>
-    
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">Panel info</h3>
-        </div>
-        <div class="panel-body">
-            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-            TEST content
-        </div>
-    </div>
 
-    <div id="mount-point"></div>
+    <!-- TODO: make NavBar as React component -->
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="../" class="navbar-brand">Bootswatch</a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="themes">
+                            <li><a href="../default/">Default</a></li>
+                            <li class="divider"></li>
+                            <li><a href="../cerulean/">Cerulean</a></li>
+                            <li><a href="../cosmo/">Cosmo</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../help/">Help</a>
+                    </li>
+                    <li>
+                        <a href="http://news.bootswatch.com">Blog</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Flatly <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="download">
+                            <li><a href="http://jsfiddle.net/bootswatch/jmg3gykg/">Open Sandbox</a></li>
+                            <li class="divider"></li>
+                            <li><a href="./bootstrap.min.css">bootstrap.min.css</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="http://builtwithbootstrap.com/" target="_blank">Built With Bootstrap</a></li>
+                    <li><a href="https://wrapbootstrap.com/?ref=bsw" target="_blank">WrapBootstrap</a></li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+    <!-- TODO: make NavBar as React component -->    
+
+    <!-- Main container -->
+    <div class="container">
+        
+        <!-- Workaround for NavBar height -->
+        <div class="page-header"></div>
+        <!-- Workaround for NavBar height -->
+        
+        <!-- ReactAPP mount point -->
+        <div id="mount-point"></div>
+        <!-- ReactAPP mount point -->
+        
+    </div>
+    <!-- Main container -->
     
     <script type="text/javascript" src="build/js/bundle.js"></script>
 </body>
 </html>
+                                        
