@@ -29,11 +29,11 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        NotesStore.addChangeListener(this._onChange);
+        NotesStore.addChangeListener(() => this._onChange);
     }
 
     componentWillUnmount() {
-        NotesStore.removeChangeListener(this._onChange);
+        NotesStore.removeChangeListener(() => this._onChange);
     }
 
     handleNoteDelete(note) {
@@ -65,7 +65,7 @@ class App extends React.Component {
                 {/* notesGrid */}
                 <div className='row'>
                     <div className='col-lg-12 text-center'>
-                        <NotesGrid />
+                        <NotesGrid notes={this.state.notes} onNoteDelete={this.handleNoteDelete} />
                     </div>
                 </div>
             
