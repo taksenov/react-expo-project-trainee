@@ -23,7 +23,7 @@ class App extends React.Component {
     // getInitialState() {
     //     return getStateFromFlux();
     // }
-    
+
     componentWillMount() {
         NotesActions.loadNotes();
     }
@@ -42,33 +42,33 @@ class App extends React.Component {
 
     handleNoteAdd(noteData) {
         NotesActions.createNote(noteData);
-    }    
+    }
 
     render() {
         return (
             <div className='App'>
-            
+
                 {/* Header */}
                 <div className='row'>
                     <div className='col-lg-12 text-center'>
                         <h2 className='App__header'> Notes </h2>
                     </div>
                 </div>
-                
+
                 {/* NoteEditor */}
                 <div className='row'>
                     <div className='col-lg-12 text-center'>
                         <NoteEditor onNoteAdd={this.handleNoteAdd} />
                     </div>
                 </div>
-            
+
                 {/* notesGrid */}
                 <div className='row'>
                     <div className='col-lg-12 text-center'>
                         <NotesGrid notes={this.state.notes} onNoteDelete={this.handleNoteDelete} />
                     </div>
                 </div>
-            
+
             </div>
         );
     }
