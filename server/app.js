@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import {serverPort} from '../etc/config.json';
 
@@ -11,6 +12,7 @@ const app = express();
 const SERVER_PORT = +serverPort;
 
 app.use( bodyParser.json() );
+app.use( cors({ origin: '*' }) );
 
 app.get('/notes', (req, res) => {
     db.listNotes().then( data => res.send(data) );
