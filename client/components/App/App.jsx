@@ -19,11 +19,7 @@ class App extends React.Component {
         super(props);
         this.state = getStateFromFlux();
     }
-
-    // getInitialState() {
-    //     return getStateFromFlux();
-    // }
-
+    
     componentWillMount() {
         NotesActions.loadNotes();
     }

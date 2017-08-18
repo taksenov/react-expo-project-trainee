@@ -10,15 +10,12 @@ const NoteActions = {
         });
 
         api.listNotes()
-            .then(({ data }) =>
-                {
-                    AppDispatcher.dispatch({
-                        type: Constants.LOAD_NOTES_SUCCESS,
-                        notes: data
-                    })
-                    console.log('DATA is', data);
-                }
-            )
+            .then(({ data }) => {
+                AppDispatcher.dispatch({
+                    type: Constants.LOAD_NOTES_SUCCESS,
+                    notes: data
+                });
+            })
             .catch(err =>
                 AppDispatcher.dispatch({
                     type: Constants.LOAD_NOTES_FAIL,
