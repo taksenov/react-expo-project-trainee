@@ -1,35 +1,55 @@
 import React from 'react';
+import {Container} from 'flux/utils';
 
-import NotesStore from '../../stores/NotesStore';
-import NotesActions from '../../actions/NotesActions';
+// import NotesStore from '../../stores/NotesStore';
+// import NotesActions from '../../actions/NotesActions';
+
+import NotesStore from '../../data/stores/NotesStore';
+import NotesActions from '../../data/actions/NotesActions';
+
+// import AppContainer from '../../containers/AppContainer';
 
 import NoteEditor from '../NoteEditor/NoteEditor.jsx';
 import NotesGrid from '../NotesGrid/NotesGrid.jsx';
 
-function getStateFromFlux() {
-    return {
-        isLoading: NotesStore.isLoading(),
-        notes: NotesStore.getNotes()
-    };
-}
+// function getStateFromFlux() {
+//     return {
+//         isLoading: NotesStore.isLoading(),
+//         notes: NotesStore.getNotes()
+//     };
+// }
 
 class App extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = getStateFromFlux();
-    }
+    //IDEA: читай вот тут про store и его состояние https://metanit.com/web/react/5.1.php
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         notes: []
+    //     };
+    //     console.log('App: Initial this.state.notes', this.state.notes);
+    // }
     
+    static getStores() { 
+        return [NotesStore]; 
+    } 
+
+    static calculateState(prevState) { 
+        return { 
+            notes: NotesStore.getState(),
+        }; 
+    }
+
     componentWillMount() {
         NotesActions.loadNotes();
     }
 
     componentDidMount() {
-        NotesStore.addChangeListener(() => this._onChange);
+        // NotesStore.addChangeListener(() => this._onChange);
     }
 
     componentWillUnmount() {
-        NotesStore.removeChangeListener(() => this._onChange);
+        // NotesStore.removeChangeListener(() => this._onChange);
     }
 
     handleNoteDelete(note) {
@@ -69,10 +89,10 @@ class App extends React.Component {
         );
     }
 
-    _onChange() {
-        this.setState(getStateFromFlux());
-    }
+    // _onChange() {
+    //     this.setState(getStateFromFlux());
+    // }
 
 } //App
 
-export default App;
+export default Container.create(App);
