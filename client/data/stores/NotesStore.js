@@ -40,6 +40,8 @@ class NotesStore extends ReduceStore {
                 _notes = action.notes.map( formatNote );
                 _loadingError = null;
                 
+                console.log('state.set(_notes)', state.set(_notes));
+                console.log('_notes', _notes);
                 return state.set(_notes);
             }
     

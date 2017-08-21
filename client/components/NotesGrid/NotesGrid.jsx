@@ -19,7 +19,14 @@ class NotesGrid extends React.Component {
         //     console.log(elem);
         //     i++
         // console.log(this.props.notes.valueSeq());
-        console.log([...this.props.notes]);
+        // console.log([...this.props.notes]);
+        [...this.props.notes.values()].map((note) => {
+            
+            for (let i of note) {
+                console.log('Massiv',  i);
+
+            }
+        });
         // }
         // this.props.notes.valueSeq().map(note =>
         //     console.log(note)
