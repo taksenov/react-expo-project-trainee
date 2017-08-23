@@ -21,13 +21,10 @@ class App extends React.Component {
         NotesActions.loadNotes();
     }
 
-    componentDidMount() {
-        // NotesStore.addChangeListener(() => this._onChange);
-    }
-
-    componentWillUnmount() {
-        // NotesStore.removeChangeListener(() => this._onChange);
-    }
+    // TODO: убрать в следующих итерациях
+    componentDidMount() {}
+    componentWillUnmount() {}
+    // TODO: убрать в следующих итерациях
 
     handleNoteDelete(note) {
         NotesActions.deleteNote(note.id);
