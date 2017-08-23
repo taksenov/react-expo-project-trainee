@@ -23,7 +23,8 @@ class NotesStore extends ReduceStore {
     }
 
     getInitialState() {
-        return Immutable.OrderedMap();
+        //TODO: в будущем разобраться и использовать immutable //(return Immutable.OrderedMap();)
+        return { notes: [] };
     }
 
     reduce(state, action) {
@@ -40,9 +41,7 @@ class NotesStore extends ReduceStore {
                 _notes = action.notes.map( formatNote );
                 _loadingError = null;
                 
-                console.log('state.set(_notes)', state.set(_notes));
-                console.log('_notes', _notes);
-                return state.set(_notes);
+                return state = { notes: _notes };
             }
     
             case NotesActionTypes.LOAD_NOTES_FAIL: {
@@ -60,77 +59,3 @@ class NotesStore extends ReduceStore {
 }
 
 export default new NotesStore();
-
-
-
-
-
-
-
-
-
-
-
-
-// const CHANGE_EVENT = 'change';
-
-
-
-
-
-// const TasksStore = Object.assign({}, EventEmitter.prototype, {
-//     isLoading() {
-//         return _isLoading;
-//     },
-
-//     getNotes() {
-//         return _notes;
-//     },
-
-//     emitChange() {
-//         this.emit(CHANGE_EVENT);
-//     },
-
-//     addChangeListener(callback) {
-//         this.on(CHANGE_EVENT, callback);
-//     },
-
-//     removeChangeListener(callback) {
-//         this.removeListener(CHANGE_EVENT, callback);
-//     }
-// });
-
-// AppDispatcher.register(function(action) {
-//     switch(action.type) {
-
-//         case NotesActionTypes.LOAD_NOTES_REQUEST: {
-//             _isLoading = true;
-
-//             TasksStore.emitChange();
-//             break;
-//         }
-
-//         case NotesActionTypes.LOAD_NOTES_SUCCESS: {
-//             _isLoading = false;
-//             _notes = action.notes.map( formatNote );
-//             _loadingError = null;
-
-//             TasksStore.emitChange();
-//             break;
-//         }
-
-//         case NotesActionTypes.LOAD_NOTES_FAIL: {
-//             _loadingError = action.error;
-
-//             TasksStore.emitChange();
-//             break;
-//         }
-
-//         default: {
-//             console.log('No such handler');
-//         }
-
-//     }
-// });
-
-// export default TasksStore;

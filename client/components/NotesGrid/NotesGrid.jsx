@@ -14,36 +14,13 @@ class NotesGrid extends React.Component {
             isFitWidth: true
         };
 
-        // let i = 0;
-        // for (let elem of this.props.notes) {
-        //     console.log(elem);
-        //     i++
-        // console.log(this.props.notes.valueSeq());
-        // console.log([...this.props.notes]);
-        [...this.props.notes.values()].map((note) => {
-            
-            for (let i of note) {
-                console.log('Massiv',  i);
-
-            }
-        });
-        // }
-        // this.props.notes.valueSeq().map(note =>
-        //     console.log(note)
-        // );
-
-        // console.log('Masonry this.props.notes', this.props.notes);
-
-
-    //[...props.todos.values()].reverse().
-
         return (
             <Masonry
                 className='NotesGrid'
                 options={masonryOptions}
             >
                 {
-                    this.props.notes.valueSeq().map(note =>
+                    this.props.notes.map(note =>
                         <Note
                             key={note.id}
                             title={note.title}
