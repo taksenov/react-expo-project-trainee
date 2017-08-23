@@ -57,7 +57,7 @@ class App extends React.Component {
 
                 {/* notesGrid */}
                 <div className='row'>
-                    <div className='col-lg-12 text-center'>
+                    <div className='col-lg-12'>
                         <NotesGrid notes={this.state.notes} onNoteDelete={this.handleNoteDelete} />
                     </div>
                 </div>
