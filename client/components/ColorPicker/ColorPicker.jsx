@@ -5,7 +5,7 @@ import './ColorPicker.style.less';
 
 const COLORS = ['#FFFFFF', '#80D8FF', '#FFFF8D', '#FF8A80', '#CCFF90', '#CFD8DC', '#FFD180'];
 
-const ColorPicker = React.createClass({
+class ColorPicker extends React.Component {
     render() {
         return (
             <div className='ColorPicker'>
@@ -22,6 +22,6 @@ const ColorPicker = React.createClass({
             </div>
         );
     }
-});
+} // ColorPicker
 
 export default ColorPicker;
