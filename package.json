@@ -1,6 +1,6 @@
 {
   "name": "edds-data",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Data for belEdds processes",
   "main": "webpack.config.js",
   "scripts": {
@@ -23,7 +23,6 @@
     "keymirror": "^0.1.1",
     "less": "^2.7.2",
     "mongoose": "^4.11.6",
-    "mpromise": "^0.5.5",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-masonry-component": "^5.0.7"
