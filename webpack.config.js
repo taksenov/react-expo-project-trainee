@@ -1,28 +1,28 @@
 var webpack = require('webpack');
 
 module.exports = {
-    entry: "./client/main.js",
+    entry: './client/main.js',
     output: {
         path: __dirname + '/public/build/js/',
-        publicPath: "build/js/",
-        filename: "bundle.js"
+        publicPath: 'build/js/',
+        filename: 'bundle.js'
     },
     module: {
         loaders: [
             {
                 test: /\.js$/,
-                loader: "babel-loader",
+                loader: 'babel-loader',
                 exclude: [/node_modules/, /public/]
             },
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader!autoprefixer-loader",
+                loader: 'style-loader!css-loader!autoprefixer-loader',
                 exclude: [/node_modules/, /public/]
             },
             {
                 test: /\.less$/,
                 // loader: "style-loader!css-loader!autoprefixer-loader!less",
-                loader: "style-loader!css-loader!autoprefixer-loader!less-loader",
+                loader: 'style-loader!css-loader!autoprefixer-loader!less-loader',
                 exclude: [/node_modules/, /public/]
             },
             
@@ -31,7 +31,7 @@ module.exports = {
                 test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 // Limiting the size of the woff fonts breaks font-awesome ONLY for the extract text plugin
                 // loader: "url?limit=10000"
-                use: "url-loader"
+                use: 'url-loader'
             },
             {
                 test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
@@ -41,28 +41,28 @@ module.exports = {
             
             {
                 test: /\.gif$/,
-                loader: "url-loader?limit=10000&mimetype=image/gif"
+                loader: 'url-loader?limit=10000&mimetype=image/gif'
             },
             {
                 test: /\.jpg$/,
-                loader: "url-loader?limit=10000&mimetype=image/jpg"
+                loader: 'url-loader?limit=10000&mimetype=image/jpg'
             },
             {
                 test: /\.png$/,
-                loader: "url-loader?limit=10000&mimetype=image/png"
+                loader: 'url-loader?limit=10000&mimetype=image/png'
             },
             {
                 test: /\.svg/,
-                loader: "url-loader?limit=26000&mimetype=image/svg+xml"
+                loader: 'url-loader?limit=26000&mimetype=image/svg+xml'
             },
             {
                 test: /\.jsx$/,
-                loader: "react-hot!babel-loader",
+                loader: 'react-hot-loader!babel-loader',
                 exclude: [/node_modules/, /public/]
             },
             {
                 test: /\.json$/,
-                loader: "json-loader"
+                loader: 'json-loader'
             },
             { 
                 test: /bootstrap.+\.(jsx|js)$/, 
