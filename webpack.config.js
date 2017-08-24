@@ -1,11 +1,11 @@
 var webpack = require('webpack');
-var path = require('path');
+// var path = require('path');
 
 module.exports = {
     entry: './client/main.js',
     output: {
-        // path: __dirname + '/public/build/js/',   // IDEA: Use for linux
-        path: path.resolve(__dirname, '/public/build/js/'),   // IDEA: Use for Windows
+        path: __dirname + '/public/build/js/',   // IDEA: Use for linux
+        // path: path.resolve(__dirname, '/public/build/js/'),   // IDEA: Use for Windows
         publicPath: 'build/js/',
         filename: 'bundle.js'
     },
