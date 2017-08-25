@@ -1,5 +1,5 @@
 var webpack = require('webpack');
-// var path = require('path');
+// var path = require('path');    // IDEA: Use for Windows
 
 module.exports = {
     entry: './client/main.js',
