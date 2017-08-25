@@ -72,6 +72,9 @@ module.exports = {
             }
         ]
     },
+    devServer: {
+        historyApiFallback: true,
+    },
     // IDEA: If need jQuery for others stuff use this instead bootstrap loader
     // plugins:[
     //     new webpack.ProvidePlugin({   

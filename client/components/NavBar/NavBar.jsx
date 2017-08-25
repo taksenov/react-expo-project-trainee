@@ -7,7 +7,7 @@ class NavBar extends React.Component {
             <div className='EddsData__NavBar navbar navbar-default navbar-fixed-top'>
                 <div className='container'>
                     <div className='navbar-header'>
-                        <a href='../' className='navbar-brand'>EDDS Data</a>
+                        <Link to='../' className='navbar-brand'>EDDS Data</Link>
                         <button className='navbar-toggle' type='button' data-toggle='collapse' data-target='#navbar-main'>
                             <span className='icon-bar'></span>
                             <span className='icon-bar'></span>
