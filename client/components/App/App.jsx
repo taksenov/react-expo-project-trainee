@@ -1,68 +1,36 @@
 import React from 'react';
-import {Container} from 'flux/utils';
+import { Route } from 'react-router-dom';
 
-import NotesStore from '../../data/stores/NotesStore';
-import NotesActions from '../../data/actions/NotesActions';
-
-import NoteEditor from '../NoteEditor/NoteEditor.jsx';
-import NotesGrid from '../NotesGrid/NotesGrid.jsx';
+import NavBar from '../NavBar/NavBar.jsx';
+import NotesMain from '../NotesMain/NotesMain.jsx';
+import FiresMain from '../FiresMain/FiresMain.jsx';
 
 class App extends React.Component {
-    
-    static getStores() { 
-        return [NotesStore]; 
-    } 
-
-    static calculateState(prevState) { 
-        return NotesStore.getState(); 
-    }
-
-    componentWillMount() {
-        NotesActions.loadNotes();
-    }
-
-    // TODO: убрать в следующих итерациях
-    componentDidMount() {}
-    componentWillUnmount() {}
-    // TODO: убрать в следующих итерациях
-
-    handleNoteDelete(note) {
-        NotesActions.deleteNote(note.id);
-    }
-
-    handleNoteAdd(noteData) {
-        NotesActions.createNote(noteData);
-    }
-
     render() {
         return (
-            <div className='App'>
-
-                {/* Header */}
-                <div className='row'>
-                    <div className='col-lg-12 text-center'>
-                        <h2 className='App__header'> Notes </h2>
+            <div className='EddsData'>
+            
+                <NavBar/>
+                
+                {/* Main container */}
+                <div className='container'>
+                
+                    {/* Workaround for NavBar height */}
+                    <div className='page-header'></div>
+                    {/* Workaround for NavBar height */}
+    
+                    <div className='EddsData__content'>
+                        <Route path='/notes' component={NotesMain} />
+                        <Route path='/fires' component={FiresMain} />
                     </div>
+                    
                 </div>
-
-                {/* NoteEditor */}
-                <div className='row'>
-                    <div className='col-lg-12 text-center'>
-                        <NoteEditor onNoteAdd={this.handleNoteAdd} />
-                    </div>
-                </div>
-
-                {/* notesGrid */}
-                <div className='row'>
-                    <div className='col-lg-12'>
-                        <NotesGrid notes={this.state.notes} onNoteDelete={this.handleNoteDelete} />
-                    </div>
-                </div>
-
+                {/* Main container */}
+        
             </div>
         );
     }
 
 } //App
 
-export default Container.create(App);
+export default App;

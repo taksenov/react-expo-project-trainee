@@ -1,15 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class NavBar extends React.Component {
-
-
     render() {
         return (
-            <div className='navbar navbar-default navbar-fixed-top'>
+            <div className='EddsData__NavBar navbar navbar-default navbar-fixed-top'>
                 <div className='container'>
                     <div className='navbar-header'>
-                        <a href='../' className='navbar-brand'>Bootswatch</a>
+                        <a href='../' className='navbar-brand'>EDDS Data</a>
                         <button className='navbar-toggle' type='button' data-toggle='collapse' data-target='#navbar-main'>
                             <span className='icon-bar'></span>
                             <span className='icon-bar'></span>
@@ -18,6 +16,12 @@ class NavBar extends React.Component {
                     </div>
                     <div className='navbar-collapse collapse' id='navbar-main'>
                         <ul className='nav navbar-nav'>
+                            <li>
+                                <Link to="/notes">Notes</Link>  
+                            </li>
+                            <li>
+                                <Link to="/fires">Fires</Link>
+                            </li>
                             <li className='dropdown'>
                                 <a className='dropdown-toggle' data-toggle='dropdown' href='#' id='themes'>Themes <span className='caret'></span></a>
                                 <ul className='dropdown-menu' aria-labelledby='themes'>
