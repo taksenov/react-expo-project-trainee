@@ -1,9 +1,11 @@
 var webpack = require('webpack');
+// var path = require('path');    // IDEA: Use for Windows
 
 module.exports = {
     entry: './client/main.js',
     output: {
-        path: __dirname + '/public/build/js/',
+        path: __dirname + '/public/build/js/',   // IDEA: Use for linux
+        // path: path.resolve(__dirname, '/public/build/js/'),   // IDEA: Use for Windows
         publicPath: 'build/js/',
         filename: 'bundle.js'
     },
@@ -69,6 +71,9 @@ module.exports = {
                 loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window' 
             }
         ]
+    },
+    devServer: {
+        historyApiFallback: true,
     },
     // IDEA: If need jQuery for others stuff use this instead bootstrap loader
     // plugins:[
