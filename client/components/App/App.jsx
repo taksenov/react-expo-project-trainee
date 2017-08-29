@@ -11,16 +11,16 @@ class App extends React.Component {
     render() {
         return (
             <div className='EddsData'>
-            
+
                 <NavBar/>
-                
+
                 {/* Main container */}
                 <div className='container'>
-                
+
                     {/* Workaround for NavBar height */}
                     <div className='page-header'></div>
                     {/* Workaround for NavBar height */}
-    
+
                     <div className='EddsData__content'>
                         <Switch>
                             <Route exact path='/' component={HomePage}/>
@@ -28,10 +28,10 @@ class App extends React.Component {
                             <Route path='/fires' component={FiresMain} />
                         </Switch>
                     </div>
-                    
+
                 </div>
                 {/* Main container */}
-        
+
             </div>
         );
     }
