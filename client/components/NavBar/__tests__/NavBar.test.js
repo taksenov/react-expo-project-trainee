@@ -8,6 +8,9 @@ describe('<NavBar />', () => {
             <NavBar />
         );
 
+        // // Выведем отрендеренный компонент
+        // console.log(renderedComponent.debug());
+
         // Find NavBar on page
         expect(renderedComponent.find('.navbar').hasClass('EddsData__NavBar')).toBe(true);
         

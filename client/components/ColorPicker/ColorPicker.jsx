@@ -23,5 +23,5 @@ class ColorPicker extends React.Component {
         );
     }
 } // ColorPicker
-
+ 
 export default ColorPicker;

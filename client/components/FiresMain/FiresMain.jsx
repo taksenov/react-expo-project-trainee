@@ -11,7 +11,7 @@ class FiresMain extends React.Component {
                         <h2 className='App__header'> Fires </h2>
                     </div>
                 </div>
-
+ 
                 <div>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, numquam at.
                     Nulla modi dolore provident. Doloribus dolorum, a suscipit omnis rerum saepe

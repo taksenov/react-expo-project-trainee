@@ -1,5 +1,5 @@
 import React from 'react';
-
+ 
 import ColorPicker from '../ColorPicker/ColorPicker.jsx';
 
 import './NoteEditor.style.less';
