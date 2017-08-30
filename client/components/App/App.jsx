@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-// TODO: изучить инструкцию по react-router 4 до конца и использовать в полном объеме https://habrahabr.ru/post/329996/
 
 import NavBar from '../NavBar/NavBar.jsx';
 import HomePage from '../HomePage/HomePage.jsx';
@@ -12,7 +11,7 @@ class App extends React.Component {
         return (
             <div className='EddsData'>
 
-                <NavBar/>
+                <NavBar />
 
                 {/* Main container */}
                 <div className='container'>
@@ -37,5 +36,5 @@ class App extends React.Component {
     }
 
 } //App 
-
+ 
 export default App;
