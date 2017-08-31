@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "jest",
+    "test-cover": "jest --coverage",
     "webpack-devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 0.0.0.0",
     "webpack-prod": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 0.0.0.0"
   },
