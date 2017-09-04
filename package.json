@@ -4,10 +4,15 @@
   "description": "Data for belEdds processes",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test-pre-commit": "jest --bail --colors",
+    "test-cover": "jest --coverage",
     "webpack-devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 0.0.0.0",
     "webpack-prod": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 0.0.0.0"
   },
+  "pre-commit": [
+    "test-pre-commit"
+  ],
   "author": "taksenov@gmail.com",
   "license": "MIT",
   "dependencies": {
@@ -34,21 +39,34 @@
     "autoprefixer-loader": "^3.2.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
+    "babel-jest": "^20.0.3",
     "babel-loader": "^7.1.1",
     "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
+    "enzyme": "^2.9.1",
     "eslint": "^4.4.1",
     "eslint-plugin-react": "^7.2.0",
     "file-loader": "^0.11.2",
     "imports-loader": "^0.7.1",
+    "jest": "^20.0.4",
     "json-loader": "^0.5.7",
     "less-loader": "^4.0.5",
     "postcss-loader": "^2.0.6",
+    "pre-commit": "^1.2.2",
     "react-hot-loader": "^1.3.1",
+    "react-test-renderer": "^15.6.1",
+    "regenerator-runtime": "^0.11.0",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
     "webpack": "^3.5.4",
     "webpack-dev-server": "^2.7.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
   }
 }

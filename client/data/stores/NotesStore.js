@@ -29,33 +29,34 @@ class NotesStore extends ReduceStore {
 
     reduce(state, action) {
         switch(action.type) {
-            
+
             case NotesActionTypes.LOAD_NOTES_REQUEST: {
                 _isLoading = true;
-    
+
                 return state;
             }
-    
+
             case NotesActionTypes.LOAD_NOTES_SUCCESS: {
                 _isLoading = false;
                 _notes = action.notes.map( formatNote );
                 _loadingError = null;
-                
+
                 return state = { notes: _notes };
             }
-    
+
             case NotesActionTypes.LOAD_NOTES_FAIL: {
                 _loadingError = action.error;
-    
+
                 return state;
             }
-    
+
             default: {
                 console.log('No such handler');
             }
-    
+
         }
     }
 }
 
 export default new NotesStore();
+ 

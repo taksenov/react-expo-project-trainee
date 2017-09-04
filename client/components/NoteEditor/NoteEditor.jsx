@@ -1,5 +1,5 @@
 import React from 'react';
-
+ 
 import ColorPicker from '../ColorPicker/ColorPicker.jsx';
 
 import './NoteEditor.style.less';
@@ -13,11 +13,11 @@ class NoteEditor extends React.Component {
             color: '#FFFFFF'
         };
     }
-    
+
     handleTextChange(event) {
         this.setState({ text: event.target.value });
     }
-    
+
     handleTitleChange(event) {
         this.setState({ title: event.target.value });
     }
@@ -25,14 +25,14 @@ class NoteEditor extends React.Component {
     handleColorChange(color) {
         this.setState({ color });
     }
-    
+
     handleNoteAdd() {
         const newNote = {
             title: this.state.title,
             text: this.state.text,
-            color: this.state.color            
+            color: this.state.color
         };
-        
+
         this.props.onNoteAdd(newNote);
         this.setState({
             title: '',
@@ -40,20 +40,20 @@ class NoteEditor extends React.Component {
             color: '#FFFFFF'
         });
     }
-    
+
     render() {
         return (
             <div className='NoteEditor'>
-                <input 
+                <input
                     type='text'
                     className='NoteEditor__title'
                     placeholder='Enter title'
                     value={this.state.title}
                     onChange={(e) => this.handleTitleChange(e)}
                 />
-                <textarea 
+                <textarea
                     placeholder='Enter note text'
-                    rows={5} 
+                    rows={5}
                     className='NoteEditor__text'
                     value={this.state.text}
                     onChange={(e) => this.handleTextChange(e)}
@@ -62,8 +62,8 @@ class NoteEditor extends React.Component {
                     <ColorPicker
                         value={this.state.color}
                         onChange={(color) => this.handleColorChange(color)}
-                    />                    
-                    <button 
+                    />
+                    <button
                         className='NoteEditor__button'
                         disabled={!this.state.text}
                         onClick={() => this.handleNoteAdd()}

@@ -17,10 +17,10 @@ class NavBar extends React.Component {
                     <div className='navbar-collapse collapse' id='navbar-main'>
                         <ul className='nav navbar-nav'>
                             <li>
-                                <Link to="/notes">Notes</Link>  
+                                <Link to="/notes" className="NavBar__Notes_link">Notes</Link>  
                             </li>
                             <li>
-                                <Link to="/fires">Fires</Link>
+                                <Link to="/fires" className="NavBar__Fires_link">Fires</Link>
                             </li>
                             <li className='dropdown'>
                                 <a className='dropdown-toggle' data-toggle='dropdown' href='#' id='themes'>Themes <span className='caret'></span></a>
