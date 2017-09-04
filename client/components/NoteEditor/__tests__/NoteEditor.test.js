@@ -13,6 +13,6 @@ describe('<NoteEditor />', () => {
 
         // Find NoteEditor
         expect(renderedComponent.find('div .NoteEditor').hasClass('NoteEditor')).toBe(true);
-
+ 
     });
 });
