@@ -42,7 +42,7 @@ class RiversMain extends React.Component {
  
                 {/* RiverEditor */}
                 <div className='row'>
-                    <div className='col-lg-12 text-center'>
+                    <div className='col-lg-12'>
                         <RiverEditor onRiverAdd={this.handleRiverAdd} />
                     </div>
                 </div>
