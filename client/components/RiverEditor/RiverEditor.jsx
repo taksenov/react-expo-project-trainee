@@ -38,10 +38,9 @@ class RiverEditor extends React.Component {
             levelAPPG    : this.state.levelAPPG,
             typeRiver    : this.state.typeRiver,
             scalingDate  : this.state.scalingDate,
-            criticalLevelPashtory: this.state.criticalLevelPashtory,
-            criticalLevelTugiyany: this.state.criticalLevelTugiyany,
+            criticalLevelPashtory: this.state.criticalLevelPashtory || 901,
+            criticalLevelTugiyany: this.state.criticalLevelTugiyany || 938,
             comment      : this.state.comment     
-
         };
 
         this.props.onRiverAdd(newRiver);
