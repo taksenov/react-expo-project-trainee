@@ -20,6 +20,9 @@ class NavBar extends React.Component {
                                 <Link to="/notes" className="NavBar__Notes_link">Notes</Link>  
                             </li>
                             <li>
+                                <Link to="/rivers" className="NavBar__Rivers_link">Rivers</Link>
+                            </li>
+                            <li>
                                 <Link to="/fires" className="NavBar__Fires_link">Fires</Link>
                             </li>
                             <li className='dropdown'>
