@@ -1,43 +1,43 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import NotesActionTypes from '../actiontypes/NotesActionTypes';
+import RiversActionTypes from '../actiontypes/RiversActionTypes';
 
 import api from '../../api';
- 
-const NoteActions = {
-    loadNotes() {
+
+const RiverActions = {
+    loadRivers() {
         AppDispatcher.dispatch({
-            type: NotesActionTypes.LOAD_NOTES_REQUEST
+            type: RiversActionTypes.LOAD_RIVERS_REQUEST
         });
 
-        api.listNotes()
+        api.listRivers()
             .then(({ data }) => {
                 AppDispatcher.dispatch({
-                    type: NotesActionTypes.LOAD_NOTES_SUCCESS,
-                    notes: data
+                    type: RiversActionTypes.LOAD_RIVERS_SUCCESS,
+                    rivers: data
                 });
             })
             .catch(err =>
                 AppDispatcher.dispatch({
-                    type: NotesActionTypes.LOAD_NOTES_FAIL,
+                    type: RiversActionTypes.LOAD_RIVERS_FAIL,
                     error: err
                 })
             );
     },
 
-    createNote(note) {
-        api.createNote(note)
+    createRiver(river) {
+        api.createRiver(river)
             .then(() =>
-                this.loadNotes()
+                this.loadRivers()
             )
             .catch(err =>
                 console.error(err)
             );
     },
 
-    deleteNote(noteId) {
-        api.deleteNote(noteId)
+    deleteRiver(riverId) {
+        api.deleteRiver(riverId)
             .then(() =>
-                this.loadNotes()
+                this.loadRivers()
             )
             .catch(err =>
                 console.error(err)
@@ -45,4 +45,4 @@ const NoteActions = {
     }
 };
 
-export default NoteActions;
+export default RiverActions;

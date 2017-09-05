@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow, mount } from 'enzyme'; 
 import NotesMain from '../NotesMain.jsx';
 import NoteEditor from '../../NoteEditor/NoteEditor.jsx';
 import NotesGrid from '../../NotesGrid/NotesGrid.jsx';

@@ -13,7 +13,7 @@ class NotesGrid extends React.Component {
             gutter: 10,
             isFitWidth: true
         };
-
+ 
         return (
             <Masonry
                 className='NotesGrid'

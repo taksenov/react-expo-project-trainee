@@ -1,6 +1,34 @@
 import React from 'react';
+import {Container} from 'flux/utils';
+
+import RiversStore from '../../data/stores/RiversStore';
+import RiversActions from '../../data/actions/RiversActions';
+
+import RiverEditor from '../RiverEditor/RiverEditor.jsx';
+import RiversGrid from '../RiversGrid/RiversGrid.jsx';
 
 class RiversMain extends React.Component {
+
+    static getStores() { 
+        return [RiversStore]; 
+    } 
+
+    static calculateState(prevState) { 
+        return RiversStore.getState(); 
+    }
+
+    componentWillMount() {
+        RiversActions.loadRivers();
+    }
+
+    handleRiverDelete(river) {
+        RiversActions.deleteRiver(river.id);
+    }
+
+    handleRiverAdd(riverData) {
+        RiversActions.createRiver(riverData);
+    }
+
     render() {
         return (
             <div className='EddsData__RiversMain'>
@@ -12,10 +40,18 @@ class RiversMain extends React.Component {
                     </div>
                 </div>
  
-                <div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, numquam at.
-                    Nulla modi dolore provident. Doloribus dolorum, a suscipit omnis rerum saepe
-                    autem quisquam facere vitae molestias iusto. Excepturi, veritatis.
+                {/* RiverEditor */}
+                <div className='row'>
+                    <div className='col-lg-12 text-center'>
+                        <RiverEditor onRiverAdd={this.handleRiverAdd} />
+                    </div>
+                </div>
+
+                {/* RiversGrid */}
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <RiversGrid rivers={this.state.rivers} onRiverDelete={this.handleRiverDelete} />
+                    </div>
                 </div>
         
             </div>
@@ -24,4 +60,4 @@ class RiversMain extends React.Component {
 
 } //RiversMain
 
-export default RiversMain;
+export default Container.create(RiversMain);

@@ -5,7 +5,7 @@ import './Note.style.less';
 class Note extends React.Component {
     render() {
         const style = { backgroundColor: this.props.color };
-
+ 
         return (
             <div className='Note' style={style}>
                 <span className='Note__del-icon' onClick={this.props.onDelete}> × </span>
