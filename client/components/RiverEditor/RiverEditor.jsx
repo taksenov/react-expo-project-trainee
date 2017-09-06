@@ -1,6 +1,21 @@
 import React from 'react';
- 
+import Select from 'react-select';
+
 import './RiverEditor.style.less';
+import 'react-select/dist/react-select.css';
+
+let optionsRiver = [
+    { value: 'Обь',   label: 'Обь',   typeRiver: 'river_01', hydroPost: 'с. Полноват',   name: 'р. Обь' },
+    { value: 'Казым', label: 'Казым', typeRiver: 'river_02', hydroPost: 'г. Белоярский', name: 'р. Казым' },
+    { value: 'Амня',  label: 'Амня',  typeRiver: 'river_03', hydroPost: 'с. Казым',      name: 'р. Амня' }
+];
+  
+// function logChange(val) {
+//     console.log('Selected: ' + JSON.stringify(val));
+//     // console.log('Selected: ' + val.type);
+// }
+  
+
 
 class RiverEditor extends React.Component {
     constructor(props) {
@@ -24,8 +39,46 @@ class RiverEditor extends React.Component {
         this.setState({ comment: event.target.value });
     }
 
+    handleLevelTodayChange(event) {
+        if (!event.target.value) {
+            this.setState({ 
+                levelToday   : '',
+                levelDelta   : '',
+                levelAPPG    : '',
+            });
+        } else {
+            this.setState({ 
+                levelToday   : event.target.value,
+                levelDelta   : '0',
+                levelAPPG    : '0',
+            });
+        }
+        
+    }
+
     handleNameChange(event) {
         this.setState({ name: event.target.value });
+    }
+
+    handleRiverSelect(value) {
+        if (!value) {
+            this.setState({
+                name         : '',
+                hydroPost    : '',
+                typeRiver    : '',
+                levelToday   : '',
+                levelDelta   : '',
+                levelAPPG    : '',
+                comment      : ''
+            });
+        } else {
+            // console.log('Selected: ' +  value);
+            this.setState({
+                name         : value.name,
+                hydroPost    : value.hydroPost,
+                typeRiver    : value.typeRiver
+            });
+        }
     }
 
     handleRiverAdd() {
@@ -71,80 +124,113 @@ class RiverEditor extends React.Component {
                         <div className='well bs-component'>
                             <form className='form-horizontal'>
                                 <fieldset>
-                                    <legend>Legend</legend>
+                                    <legend>Укажите уровень воды в реке</legend>
+
                                     <div className='form-group'>
-                                        <label htmlFor='inputEmail' className='col-lg-2 control-label'>Email</label>
-                                        <div className='col-lg-10'>
-                                            <input type='text' className='form-control' id='inputEmail' placeholder='Email' />
+                                        <label htmlFor='RiversSelect' className='col-lg-1 control-label'>
+                                            Река
+                                        </label>
+                                        <div className='col-lg-11'>
+                                            <Select 
+                                                id='RiversSelect'
+                                                name='Rivers'
+                                                searchable={false} 
+                                                value={this.state.name}
+                                                onChange={(val) => this.handleRiverSelect(val)}
+                                                selectValue={this.state.name}
+                                                options={optionsRiver}
+                                                clearable={true} 
+                                                placeholder={this.state.name !== '' ? this.state.name : 'Select...'}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className='form-group'>
+                                        <label htmlFor='inputHydroPost' className='col-lg-1 control-label'>
+                                            Гидропост
+                                        </label>
+                                        <div className='col-lg-11'>
+                                            <input 
+                                                type='text' 
+                                                className='form-control' 
+                                                id='inputHydroPost' 
+                                                placeholder='Гидропост' 
+                                                value={this.state.hydroPost}
+                                                disabled={true}
+                                            />
+                                        </div>                                        
+                                    </div>                                    
+
+                                    <div className='form-group'>
+                                        <label htmlFor='inputLevelToday' className='col-lg-1 control-label'>
+                                            Уровень
+                                        </label>
+                                        <div className='col-lg-3'>
+                                            <input 
+                                                type='text' 
+                                                className='form-control' 
+                                                id='inputLevelToday' 
+                                                placeholder='Уровень воды' 
+                                                value={this.state.levelToday}
+                                                disabled={ this.state.name === '' ? true : false }
+                                                onChange={(e) => this.handleLevelTodayChange(e)}
+                                            />
+                                        </div>
+                                        <label htmlFor='inputLevelDelta' className='col-lg-1 control-label'>
+                                            Динамика
+                                        </label>
+                                        <div className='col-lg-3'>
+                                            <input 
+                                                type='text' 
+                                                className='form-control' 
+                                                id='inputLevelDelta' 
+                                                placeholder='Динамика' 
+                                                value={this.state.levelDelta}
+                                                disabled={true}
+                                            />
+                                        </div>
+                                        <label htmlFor='inputLevelAPPG' className='col-lg-1 control-label'>
+                                            АППГ
+                                        </label>
+                                        <div className='col-lg-3'>
+                                            <input 
+                                                type='text' 
+                                                className='form-control' 
+                                                id='inputLevelAPPG' 
+                                                placeholder='АППГ' 
+                                                value={this.state.levelAPPG}
+                                                disabled={true}
+                                            />
                                         </div>
                                     </div>
                                     <div className='form-group'>
-                                        <label htmlFor='inputPassword' className='col-lg-2 control-label'>Password</label>
-                                        <div className='col-lg-10'>
-                                            <input type='password' className='form-control' id='inputPassword' placeholder='Password' />
-                                            <div className='checkbox'>
-                                                <label>
-                                                {/*    
-                                                    <input type='checkbox'> Checkbox </input>
-                                                */}
-                                                </label>
-                                            </div>
+                                        <label htmlFor='textComment' className='col-lg-1 control-label'>
+                                            Примечание
+                                        </label>
+                                        <div className='col-lg-11'>
+                                            <textarea 
+                                                className='RiverEditor__text form-control'
+                                                rows={3} 
+                                                id='textComment'
+                                                disabled={ this.state.name === '' ? true : false }
+                                                value={this.state.comment}
+                                                onChange={(e) => this.handleCommentChange(e)}
+                                            />
                                         </div>
                                     </div>
-                                    <div className='form-group'>
-                                        <label htmlFor='textArea' className='col-lg-2 control-label'>Textarea</label>
-                                        <div className='col-lg-10'>
-                                            <textarea className='form-control' rows='3' id='textArea'></textarea>
-                                            <span className='help-block'>A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+                                    <div className="form-group">
+                                        <div className="alert alert-danger">
+                                            Так будет выглядеть сообщение об ошибке
                                         </div>
-                                    </div>
-                                    <div className='form-group'>
-                                        <label className='col-lg-2 control-label'>Radios</label>
-                                        <div className='col-lg-10'>
-                                            <div className='radio'>
-                                                <label>
-                                                {/*
-                                                    <input type='radio' name='optionsRadios' id='optionsRadios1' value='option1' checked=''>
-                                                        Option one is this
-                                                    </input>
-                                                */}    
-                                                </label>
-                                            </div>
-                                            <div className='radio'>
-                                                <label>
-                                                {/*
-                                                    <input type='radio' name='optionsRadios' id='optionsRadios2' value='option2'>
-                                                        Option two can be something else
-                                                    </input>
-                                                    */}
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='form-group'>
-                                        <label htmlFor='select' className='col-lg-2 control-label'>Selects</label>
-                                        <div className='col-lg-10'>
-                                            <select className='form-control' id='select'>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                            <br />
-                                            <select multiple='' className='form-control'>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                     <div className='form-group'>
                                         <div className='col-lg-10 col-lg-offset-2'>
-                                            <button type='reset' className='btn btn-default'>Cancel</button>
-                                            <button type='submit' className='btn btn-primary'>Submit</button>
+                                            <button type='reset' className='btn btn-default'>
+                                                Очистить
+                                            </button>
+                                            <button type='submit' className='btn btn-primary'>
+                                                Сохранить
+                                            </button>
                                         </div>
                                     </div>
                                 </fieldset>

@@ -1,4 +1,9 @@
-**Используемые технологии**
+## Используемые технологии ##
+
+** Читай Wiki **
+
+[https://bitbucket.org/taksenov/edds-data/wiki/browse/](https://bitbucket.org/taksenov/edds-data/wiki/browse/)
+
 
 
 "axios"    [https://www.npmjs.com/package/axios](https://www.npmjs.com/package/axios)
