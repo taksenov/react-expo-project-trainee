@@ -1,6 +1,6 @@
 **Используемые технологии**
 
-"dependencies": {
+
     "axios"    [https://www.npmjs.com/package/axios](https://www.npmjs.com/package/axios)
     "body-parser"    []()
     "bootstrap"    [https://getbootstrap.com/docs/3.3/](https://getbootstrap.com/docs/3.3/)
@@ -19,8 +19,7 @@
     "react-dom"    [https://facebook.github.io/react/docs/react-dom.html](https://facebook.github.io/react/docs/react-dom.html)
     "react-masonry-component"    []()
     "react-router-dom"    []()
-  },
-  "devDependencies": {
+
     "autoprefixer-loader"    []()
     "babel-cli"    []()
     "babel-core"    []()
@@ -47,4 +46,3 @@
     "url-loader"    []()
     "webpack"    [https://webpack.github.io](https://webpack.github.io)
     "webpack-dev-server"    []()
-  },
