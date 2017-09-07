@@ -43,6 +43,7 @@ class RiverEditor extends React.Component {
     componentDidMount() {
         // () => this.handleDateTimeChange(this.state.dateString, this.state.hours, this.state.minutes);
         console.log('Часы:', ReactDOM.findDOMNode(this.refs.hoursInput).value);
+        console.log('Минуты:', ReactDOM.findDOMNode(this.refs.minutesInput).value);
     }
 
     handleCommentChange(event) {
@@ -51,19 +52,19 @@ class RiverEditor extends React.Component {
 
     handleLevelTodayChange(event) {
         if (!event.target.value) {
-            this.setState({ 
+            this.setState({
                 levelToday   : '',
                 levelDelta   : '',
                 levelAPPG    : '',
             });
         } else {
-            this.setState({ 
+            this.setState({
                 levelToday   : event.target.value,
                 levelDelta   : '0',
                 levelAPPG    : '0',
             });
         }
-        
+
     }
 
     handleNameChange(event) {
@@ -72,9 +73,9 @@ class RiverEditor extends React.Component {
 
     handleDateChange(value) {
         this.setState(
-            { 
+            {
                 dateVisible: value,
-                dateString: value.format('YYYY[-]MM[-]DD') 
+                dateString: value.format('YYYY[-]MM[-]DD')
             },
             () => this.handleDateTimeChange(this.state.dateString, this.state.hours, this.state.minutes)
         );
@@ -143,7 +144,7 @@ class RiverEditor extends React.Component {
             scalingDate  : this.state.scalingDate,
             criticalLevelPashtory: this.state.criticalLevelPashtory || 901,
             criticalLevelTugiyany: this.state.criticalLevelTugiyany || 938,
-            comment      : this.state.comment     
+            comment      : this.state.comment
         };
 
         this.props.onRiverAdd(newRiver);
@@ -171,7 +172,7 @@ class RiverEditor extends React.Component {
             <div>
 
                 <div className='row'>
-                
+
                     <div className='col-lg-12'>
 
                         <div className='well bs-component'>
@@ -189,7 +190,7 @@ class RiverEditor extends React.Component {
                                                 className='form-control'
                                                 dateFormat='YYYY-MM-DD'
                                                 selected={this.state.dateVisible}
-                                                onChange={(value) => this.handleDateChange(value)} 
+                                                onChange={(value) => this.handleDateChange(value)}
                                             />
                                             <span className='help-block'>
                                                 Все поля обязательны для заполнения
@@ -199,11 +200,11 @@ class RiverEditor extends React.Component {
                                             ЧЧ
                                         </label>
                                         <div className='col-lg-2'>
-                                            <input 
-                                                type='text' 
-                                                className='form-control' 
-                                                id='inputHours' 
-                                                placeholder='ЧЧ' 
+                                            <input
+                                                type='text'
+                                                className='form-control'
+                                                id='inputHours'
+                                                placeholder='ЧЧ'
                                                 value={this.state.hours}
                                                 onChange={(e) => this.handleHoursChange(e)}
                                                 disabled={false}
@@ -214,11 +215,11 @@ class RiverEditor extends React.Component {
                                             ММ
                                         </label>
                                         <div className='col-lg-2'>
-                                            <input 
-                                                type='text' 
-                                                className='form-control' 
-                                                id='inputMinutes' 
-                                                placeholder='ММ' 
+                                            <input
+                                                type='text'
+                                                className='form-control'
+                                                id='inputMinutes'
+                                                placeholder='ММ'
                                                 value={this.state.minutes}
                                                 onChange={(e) => this.handleMinutesChange(e)}
                                                 disabled={false}
@@ -232,15 +233,15 @@ class RiverEditor extends React.Component {
                                             Река
                                         </label>
                                         <div className='col-lg-11'>
-                                            <Select 
+                                            <Select
                                                 id='RiversSelect'
                                                 name='Rivers'
-                                                searchable={false} 
+                                                searchable={false}
                                                 value={this.state.name}
                                                 onChange={(val) => this.handleRiverSelect(val)}
                                                 selectValue={this.state.name}
                                                 options={optionsRiver}
-                                                clearable={true} 
+                                                clearable={true}
                                                 placeholder={this.state.name !== '' ? this.state.name : 'Select...'}
                                             />
                                         </div>
@@ -251,27 +252,27 @@ class RiverEditor extends React.Component {
                                             Гидропост
                                         </label>
                                         <div className='col-lg-11'>
-                                            <input 
-                                                type='text' 
-                                                className='form-control' 
-                                                id='inputHydroPost' 
-                                                placeholder='Гидропост' 
+                                            <input
+                                                type='text'
+                                                className='form-control'
+                                                id='inputHydroPost'
+                                                placeholder='Гидропост'
                                                 value={this.state.hydroPost}
                                                 disabled={true}
                                             />
-                                        </div>                                        
-                                    </div>                                    
+                                        </div>
+                                    </div>
 
                                     <div className='form-group'>
                                         <label htmlFor='inputLevelToday' className='col-lg-1 control-label'>
                                             Уровень
                                         </label>
                                         <div className='col-lg-3'>
-                                            <input 
-                                                type='text' 
-                                                className='form-control' 
-                                                id='inputLevelToday' 
-                                                placeholder='Уровень воды' 
+                                            <input
+                                                type='text'
+                                                className='form-control'
+                                                id='inputLevelToday'
+                                                placeholder='Уровень воды'
                                                 value={this.state.levelToday}
                                                 disabled={ this.state.name === '' ? true : false }
                                                 onChange={(e) => this.handleLevelTodayChange(e)}
@@ -281,11 +282,11 @@ class RiverEditor extends React.Component {
                                             Динамика
                                         </label>
                                         <div className='col-lg-3'>
-                                            <input 
-                                                type='text' 
-                                                className='form-control' 
-                                                id='inputLevelDelta' 
-                                                placeholder='Динамика' 
+                                            <input
+                                                type='text'
+                                                className='form-control'
+                                                id='inputLevelDelta'
+                                                placeholder='Динамика'
                                                 value={this.state.levelDelta}
                                                 disabled={true}
                                             />
@@ -294,11 +295,11 @@ class RiverEditor extends React.Component {
                                             АППГ
                                         </label>
                                         <div className='col-lg-3'>
-                                            <input 
-                                                type='text' 
-                                                className='form-control' 
-                                                id='inputLevelAPPG' 
-                                                placeholder='АППГ' 
+                                            <input
+                                                type='text'
+                                                className='form-control'
+                                                id='inputLevelAPPG'
+                                                placeholder='АППГ'
                                                 value={this.state.levelAPPG}
                                                 disabled={true}
                                             />
@@ -310,9 +311,9 @@ class RiverEditor extends React.Component {
                                             Примечание
                                         </label>
                                         <div className='col-lg-11'>
-                                            <textarea 
+                                            <textarea
                                                 className='RiverEditor__text form-control'
-                                                rows={3} 
+                                                rows={3}
                                                 id='textComment'
                                                 disabled={this.state.name === '' ? true : false}
                                                 value={!this.state.comment ? 'Чисто' : this.state.comment}
@@ -324,7 +325,7 @@ class RiverEditor extends React.Component {
                                         <div className='alert alert-danger'>
                                             Так будет выглядеть сообщение об ошибке
                                         </div>
-                                    </div>                                    
+                                    </div>
                                     <div className='form-group'>
                                         <div className='col-lg-10 col-lg-offset-2'>
                                             <button type='reset' className='btn btn-default'>
@@ -336,17 +337,17 @@ class RiverEditor extends React.Component {
                                         </div>
                                     </div>
                                 </fieldset>
-                            </form>                 
-                        </div>  
+                            </form>
+                        </div>
 
                     </div>
 
                 </div>
 
-          
+
 
                 <div className='RiverEditor'>
-   
+
                     <input
                         type='text'
                         className='RiverEditor__title'
@@ -370,8 +371,8 @@ class RiverEditor extends React.Component {
                             Add
                         </button>
                     </div>
-                </div>            
-            
+                </div>
+
             </div>
 
 
