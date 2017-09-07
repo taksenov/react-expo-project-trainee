@@ -1,20 +1,19 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Select from 'react-select';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 import './RiverEditor.style.less';
 import 'react-select/dist/react-select.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 let optionsRiver = [
     { value: 'Обь',   label: 'Обь',   typeRiver: 'river_01', hydroPost: 'с. Полноват',   name: 'р. Обь' },
     { value: 'Казым', label: 'Казым', typeRiver: 'river_02', hydroPost: 'г. Белоярский', name: 'р. Казым' },
     { value: 'Амня',  label: 'Амня',  typeRiver: 'river_03', hydroPost: 'с. Казым',      name: 'р. Амня' }
 ];
-  
-// function logChange(val) {
-//     console.log('Selected: ' + JSON.stringify(val));
-//     // console.log('Selected: ' + val.type);
-// }
-  
+// let momentDate = moment();
 
 
 class RiverEditor extends React.Component {
@@ -31,8 +30,19 @@ class RiverEditor extends React.Component {
             scalingDate  : '',
             criticalLevelPashtory: '',
             criticalLevelTugiyany: '',
-            comment      : ''
+            comment      : '',
+            // date  : moment().format('YYYY[-]MM[-]DD'),
+            dateVisible  : moment(),
+            dateString  : '01-01-1900',
+            hours: '09',
+            minutes: '00'
+
         };
+    }
+
+    componentDidMount() {
+        // () => this.handleDateTimeChange(this.state.dateString, this.state.hours, this.state.minutes);
+        console.log('Часы:', ReactDOM.findDOMNode(this.refs.hoursInput).value);
     }
 
     handleCommentChange(event) {
@@ -60,6 +70,34 @@ class RiverEditor extends React.Component {
         this.setState({ name: event.target.value });
     }
 
+    handleDateChange(value) {
+        this.setState(
+            { 
+                dateVisible: value,
+                dateString: value.format('YYYY[-]MM[-]DD') 
+            },
+            () => this.handleDateTimeChange(this.state.dateString, this.state.hours, this.state.minutes)
+        );
+    }
+
+    handleHoursChange(event) {
+        this.setState(
+            { hours: event.target.value },
+            () => this.handleDateTimeChange(this.state.dateString, this.state.hours, this.state.minutes)
+        );
+    }
+
+    handleMinutesChange(event) {
+        this.setState({ minutes: event.target.value },
+            () => this.handleDateTimeChange(this.state.dateString, this.state.hours, this.state.minutes)
+        );
+    }
+
+    handleDateTimeChange(date, hours, minutes) {
+        //   2017-09-05T11:58:00.000Z
+        this.setState({ scalingDate: `${date}T${hours}:${minutes}:00.000Z` });
+    }
+
     handleRiverSelect(value) {
         if (!value) {
             this.setState({
@@ -82,6 +120,18 @@ class RiverEditor extends React.Component {
     }
 
     handleRiverAdd() {
+
+        if (moment(this.state.scalingDate,'YYYY[-]MM[-]DDThh[:]mm[:00.000Z]').isValid()
+             ||
+            !this.state.scalingDate) {
+            console.log('error');
+            console.log('this.state.scalingDate', this.state.scalingDate);
+            return;
+        } else {
+            console.log('NOT error');
+            console.log('this.state.scalingDate', this.state.scalingDate);
+        }
+
         const newRiver = {
             id           : this.state.id,
             name         : this.state.name,
@@ -108,7 +158,10 @@ class RiverEditor extends React.Component {
             scalingDate  : '',
             criticalLevelPashtory: '',
             criticalLevelTugiyany: '',
-            comment      : ''
+            comment      : '',
+            dateString  : '01-01-1900',
+            hours: '09',
+            minutes: '00'
         });
     }
 
@@ -117,14 +170,62 @@ class RiverEditor extends React.Component {
 
             <div>
 
-                <div className="row">
+                <div className='row'>
                 
                     <div className='col-lg-12'>
 
                         <div className='well bs-component'>
                             <form className='form-horizontal'>
                                 <fieldset>
-                                    <legend>Укажите уровень воды в реке</legend>
+                                    <legend>Измерения уровня воды в реке</legend>
+
+                                    <div className='form-group'>
+                                        <label htmlFor='inputDate' className='col-lg-1 control-label'>
+                                            Дата
+                                        </label>
+                                        <div className='col-lg-5'>
+
+                                            <DatePicker
+                                                className='form-control'
+                                                dateFormat='YYYY-MM-DD'
+                                                selected={this.state.dateVisible}
+                                                onChange={(value) => this.handleDateChange(value)} 
+                                            />
+                                            <span className='help-block'>
+                                                Все поля обязательны для заполнения
+                                            </span>
+                                        </div>
+                                        <label htmlFor='inputHours' className='col-lg-1 control-label'>
+                                            ЧЧ
+                                        </label>
+                                        <div className='col-lg-2'>
+                                            <input 
+                                                type='text' 
+                                                className='form-control' 
+                                                id='inputHours' 
+                                                placeholder='ЧЧ' 
+                                                value={this.state.hours}
+                                                onChange={(e) => this.handleHoursChange(e)}
+                                                disabled={false}
+                                                ref='hoursInput'
+                                            />
+                                        </div>
+                                        <label htmlFor='inputMinutes' className='col-lg-1 control-label'>
+                                            ММ
+                                        </label>
+                                        <div className='col-lg-2'>
+                                            <input 
+                                                type='text' 
+                                                className='form-control' 
+                                                id='inputMinutes' 
+                                                placeholder='ММ' 
+                                                value={this.state.minutes}
+                                                onChange={(e) => this.handleMinutesChange(e)}
+                                                disabled={false}
+                                                ref='minutesInput'
+                                            />
+                                        </div>
+                                    </div>
 
                                     <div className='form-group'>
                                         <label htmlFor='RiversSelect' className='col-lg-1 control-label'>
@@ -203,6 +304,7 @@ class RiverEditor extends React.Component {
                                             />
                                         </div>
                                     </div>
+
                                     <div className='form-group'>
                                         <label htmlFor='textComment' className='col-lg-1 control-label'>
                                             Примечание
@@ -212,14 +314,14 @@ class RiverEditor extends React.Component {
                                                 className='RiverEditor__text form-control'
                                                 rows={3} 
                                                 id='textComment'
-                                                disabled={ this.state.name === '' ? true : false }
-                                                value={this.state.comment}
+                                                disabled={this.state.name === '' ? true : false}
+                                                value={!this.state.comment ? 'Чисто' : this.state.comment}
                                                 onChange={(e) => this.handleCommentChange(e)}
                                             />
                                         </div>
                                     </div>
-                                    <div className="form-group">
-                                        <div className="alert alert-danger">
+                                    <div className='form-group'>
+                                        <div className='alert alert-danger'>
                                             Так будет выглядеть сообщение об ошибке
                                         </div>
                                     </div>                                    
