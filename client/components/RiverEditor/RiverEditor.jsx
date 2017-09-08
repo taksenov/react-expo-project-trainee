@@ -208,6 +208,30 @@ class RiverEditor extends React.Component {
 
     }  // handleRiverAdd
 
+    handleFormClear() {
+        this.setState({
+            id           : '',
+            name         : '',
+            hydroPost    : '',
+            levelToday   : '',
+            levelDelta   : '',
+            levelAPPG    : '',
+            typeRiver    : '',
+            scalingDate  : '',
+            criticalLevelPashtory: '',
+            criticalLevelTugiyany: '',
+            comment      : '',
+            dateString  : '01-01-1900',
+            hours: '09',
+            minutes: '00'
+        },
+        () => this.handleDateTimeChange(
+            ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value,
+            ReactDOM.findDOMNode(this.refs.hoursInput).value, 
+            ReactDOM.findDOMNode(this.refs.minutesInput).value
+        ));
+    } // handleFormClear
+
     render() {
         return (
 
@@ -371,7 +395,10 @@ class RiverEditor extends React.Component {
                                     </div>
                                     <div className='form-group'>
                                         <div className='col-lg-11 col-lg-offset-1'>
-                                            <button type='reset' className='btn btn-default Rivers__Editor_formButton'>
+                                            <button 
+                                                className='btn btn-default Rivers__Editor_formButton'
+                                                onClick={() => this.handleFormClear()}
+                                            >
                                                 Очистить
                                             </button>
                                             <button
