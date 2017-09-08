@@ -13,8 +13,6 @@ let optionsRiver = [
     { value: 'Казым', label: 'Казым', typeRiver: 'river_02', hydroPost: 'г. Белоярский', name: 'р. Казым' },
     { value: 'Амня',  label: 'Амня',  typeRiver: 'river_03', hydroPost: 'с. Казым',      name: 'р. Амня' }
 ];
-// let momentDate = moment();
-
 
 class RiverEditor extends React.Component {
     constructor(props) {
@@ -31,7 +29,6 @@ class RiverEditor extends React.Component {
             criticalLevelPashtory: '',
             criticalLevelTugiyany: '',
             comment      : '',
-            // date  : moment().format('YYYY[-]MM[-]DD'),
             dateVisible  : moment(),
             dateString  : '01-01-1900',
             hours: '09',
@@ -41,14 +38,20 @@ class RiverEditor extends React.Component {
     }
 
     componentDidMount() {
-        // () => this.handleDateTimeChange(this.state.dateString, this.state.hours, this.state.minutes);
-        console.log('Часы:', ReactDOM.findDOMNode(this.refs.hoursInput).value);
-        console.log('Минуты:', ReactDOM.findDOMNode(this.refs.minutesInput).value);
-    }
+        this.setState({ scalingDate:
+            `${
+                ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value
+            }T${
+                ReactDOM.findDOMNode(this.refs.hoursInput).value
+            }:${
+                ReactDOM.findDOMNode(this.refs.minutesInput).value
+            }:00.000Z`
+        });
+    } // componentDidMount
 
     handleCommentChange(event) {
         this.setState({ comment: event.target.value });
-    }
+    } // handleCommentChange
 
     handleLevelTodayChange(event) {
         if (!event.target.value) {
@@ -94,8 +97,17 @@ class RiverEditor extends React.Component {
         );
     }
 
+    /**
+     * Set state template string for scalingDate
+     * 
+     * @param {any} date 
+     * @param {any} hours 
+     * @param {any} minutes 
+     * @memberof RiverEditor
+     * 
+     * @return setState {templateString} = 'YYYY-MM-DDThh:mm:00.000Z'
+     */
     handleDateTimeChange(date, hours, minutes) {
-        //   2017-09-05T11:58:00.000Z
         this.setState({ scalingDate: `${date}T${hours}:${minutes}:00.000Z` });
     }
 
@@ -122,49 +134,79 @@ class RiverEditor extends React.Component {
 
     handleRiverAdd() {
 
-        if (moment(this.state.scalingDate,'YYYY[-]MM[-]DDThh[:]mm[:00.000Z]').isValid()
-             ||
-            !this.state.scalingDate) {
-            console.log('error');
-            console.log('this.state.scalingDate', this.state.scalingDate);
-            return;
-        } else {
-            console.log('NOT error');
-            console.log('this.state.scalingDate', this.state.scalingDate);
+        let expression = new RegExp('\\d{4}\\-\\d{2}\\-\\d{2}\\T\\d{2}\\:\\d{2}\\:00.000Z');
+
+        this.setState({ scalingDate:
+            `${
+                ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value
+            }T${
+                ReactDOM.findDOMNode(this.refs.hoursInput).value
+            }:${
+                ReactDOM.findDOMNode(this.refs.minutesInput).value
+            }:00.000Z`
+        },
+        //setState callback
+        () => {
+            // проверка на соответсвие строки из инпута, шаблонной регулярке
+            if ( expression.test(this.state.scalingDate) ) {
+                console.log('RegExp-success');
+                console.log('expression', expression);
+                console.log('this.state.scalingDate', this.state.scalingDate);
+                
+                const newRiver = {
+                    id           : this.state.id,
+                    name         : this.state.name,
+                    hydroPost    : this.state.hydroPost || 'Полноват',
+                    levelToday   : this.state.levelToday,
+                    levelDelta   : this.state.levelDelta,
+                    levelAPPG    : this.state.levelAPPG,
+                    typeRiver    : this.state.typeRiver,
+                    scalingDate  : this.state.scalingDate,
+                    criticalLevelPashtory: this.state.criticalLevelPashtory || 901,
+                    criticalLevelTugiyany: this.state.criticalLevelTugiyany || 938,
+                    comment      : this.state.comment
+                };
+
+                this.props.onRiverAdd(newRiver);
+                this.setState({
+                    id           : '',
+                    name         : '',
+                    hydroPost    : '',
+                    levelToday   : '',
+                    levelDelta   : '',
+                    levelAPPG    : '',
+                    typeRiver    : '',
+                    scalingDate  : '',
+                    criticalLevelPashtory: '',
+                    criticalLevelTugiyany: '',
+                    comment      : '',
+                    dateString  : '01-01-1900',
+                    hours: '09',
+                    minutes: '00'
+                },
+                () => this.handleDateTimeChange(
+                    ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value,
+                    ReactDOM.findDOMNode(this.refs.hoursInput).value, 
+                    ReactDOM.findDOMNode(this.refs.minutesInput).value
+                ));
+            } else {
+                // TODO: сделать вывод сообщения об ошибке
+                console.log('Дата и время установлены не правильно');
+                this.setState({ scalingDate:
+                    `${
+                        ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value
+                    }T${
+                        ReactDOM.findDOMNode(this.refs.hoursInput).value
+                    }:${
+                        ReactDOM.findDOMNode(this.refs.minutesInput).value
+                    }:00.000Z`
+                });
+                return;
+            }
         }
+        );
 
-        const newRiver = {
-            id           : this.state.id,
-            name         : this.state.name,
-            hydroPost    : this.state.hydroPost || 'Полноват',
-            levelToday   : this.state.levelToday,
-            levelDelta   : this.state.levelDelta,
-            levelAPPG    : this.state.levelAPPG,
-            typeRiver    : this.state.typeRiver,
-            scalingDate  : this.state.scalingDate,
-            criticalLevelPashtory: this.state.criticalLevelPashtory || 901,
-            criticalLevelTugiyany: this.state.criticalLevelTugiyany || 938,
-            comment      : this.state.comment
-        };
-
-        this.props.onRiverAdd(newRiver);
-        this.setState({
-            id           : '',
-            name         : '',
-            hydroPost    : '',
-            levelToday   : '',
-            levelDelta   : '',
-            levelAPPG    : '',
-            typeRiver    : '',
-            scalingDate  : '',
-            criticalLevelPashtory: '',
-            criticalLevelTugiyany: '',
-            comment      : '',
-            dateString  : '01-01-1900',
-            hours: '09',
-            minutes: '00'
-        });
-    }
+    }  // handleRiverAdd
 
     render() {
         return (
@@ -191,6 +233,7 @@ class RiverEditor extends React.Component {
                                                 dateFormat='YYYY-MM-DD'
                                                 selected={this.state.dateVisible}
                                                 onChange={(value) => this.handleDateChange(value)}
+                                                ref='datePicker'
                                             />
                                             <span className='help-block'>
                                                 Все поля обязательны для заполнения
@@ -327,11 +370,15 @@ class RiverEditor extends React.Component {
                                         </div>
                                     </div>
                                     <div className='form-group'>
-                                        <div className='col-lg-10 col-lg-offset-2'>
-                                            <button type='reset' className='btn btn-default'>
+                                        <div className='col-lg-11 col-lg-offset-1'>
+                                            <button type='reset' className='btn btn-default Rivers__Editor_formButton'>
                                                 Очистить
                                             </button>
-                                            <button type='submit' className='btn btn-primary'>
+                                            <button
+                                                className='btn btn-primary Rivers__Editor_formButton'
+                                                disabled={(this.state.name && this.state.levelToday)? false : true}
+                                                onClick={() => this.handleRiverAdd()}
+                                            >
                                                 Сохранить
                                             </button>
                                         </div>
