@@ -12,8 +12,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 let optionsRiver = [
     { value: 'Обь',   label: 'Обь',   typeRiver: 'river_01', hydroPost: 'с. Полноват',   name: 'р. Обь' },
-    { value: 'Казым', label: 'Казым', typeRiver: 'river_02', hydroPost: 'г. Белоярский', name: 'р. Казым' },
-    { value: 'Амня',  label: 'Амня',  typeRiver: 'river_03', hydroPost: 'с. Казым',      name: 'р. Амня' }
+    { value: 'Амня',  label: 'Амня',  typeRiver: 'river_03', hydroPost: 'с. Казым',      name: 'р. Амня' },
+    { value: 'Казым', label: 'Казым', typeRiver: 'river_02', hydroPost: 'г. Белоярский', name: 'р. Казым' }
 ];
 
 function isNumeric(n) {
