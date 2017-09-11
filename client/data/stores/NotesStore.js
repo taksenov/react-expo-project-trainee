@@ -51,8 +51,6 @@ class NotesStore extends ReduceStore {
         }
 
         default: {
-            console.log('No such handler of Notes');
-            // return null;
             return state;
         }
 

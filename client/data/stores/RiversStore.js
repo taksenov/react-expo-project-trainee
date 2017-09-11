@@ -55,8 +55,6 @@ class RiversStore extends ReduceStore {
         }
 
         default: {
-            console.log('No such handler of Rivers');
-            // return null;
             return state;
         }
 

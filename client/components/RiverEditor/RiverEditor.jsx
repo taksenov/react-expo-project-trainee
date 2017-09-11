@@ -4,6 +4,8 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
+import MessageForForm from '../MessageForForm/MessageForForm.jsx';
+
 import './RiverEditor.style.less';
 import 'react-select/dist/react-select.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -13,6 +15,10 @@ let optionsRiver = [
     { value: 'Казым', label: 'Казым', typeRiver: 'river_02', hydroPost: 'г. Белоярский', name: 'р. Казым' },
     { value: 'Амня',  label: 'Амня',  typeRiver: 'river_03', hydroPost: 'с. Казым',      name: 'р. Амня' }
 ];
+
+function isNumeric(n) {
+    return !isNaN(parseInt(n,10)) && isFinite(n);
+} // isNumeric
 
 class RiverEditor extends React.Component {
     constructor(props) {
@@ -31,11 +37,13 @@ class RiverEditor extends React.Component {
             comment      : '',
             dateVisible  : moment(),
             dateString  : '01-01-1900',
-            hours: '09',
-            minutes: '00'
-
+            hours: '08',
+            minutes: '00',
+            isError: false,
+            messageText: '',
+            messageClassName: ''
         };
-    }
+    } //constructor
 
     componentDidMount() {
         this.setState({ scalingDate:
@@ -54,25 +62,51 @@ class RiverEditor extends React.Component {
     } // handleCommentChange
 
     handleLevelTodayChange(event) {
+        let isNumbers = event.target.value;
+        let expression = new RegExp('\\d*');
+
         if (!event.target.value) {
             this.setState({
                 levelToday   : '',
                 levelDelta   : '',
                 levelAPPG    : '',
+                isError: false,
+                messageText: '',
+                messageClassName: ''
             });
         } else {
-            this.setState({
-                levelToday   : event.target.value,
-                levelDelta   : '0',
-                levelAPPG    : '0',
-            });
-        }
-
-    }
+            // проверим, что в инпут введены цифры
+            if ( expression.test(isNumbers) && isNumeric(isNumbers) ) {
+                // отсечем ввод шестнадцатеричных
+                if ( isNumbers.indexOf('x') !== -1 && isNumbers.indexOf('X') !== -1 ) {
+                    this.setState({ 
+                        isError: true,
+                        messageText: 'Разрешены только цифры',
+                        messageClassName: 'alert-warning'
+                    });
+                } else {
+                    this.setState({
+                        levelToday   : event.target.value,
+                        levelDelta   : '0',
+                        levelAPPG    : '0',
+                        isError: false,
+                        messageText: '',
+                        messageClassName: ''
+                    });
+                }
+            } else {
+                this.setState({ 
+                    isError: true,
+                    messageText: 'Разрешены только цифры',
+                    messageClassName: 'alert-warning'
+                });
+            }
+        }        
+    } //handleLevelTodayChange
 
     handleNameChange(event) {
         this.setState({ name: event.target.value });
-    }
+    } //handleNameChange
 
     handleDateChange(value) {
         this.setState(
@@ -82,20 +116,20 @@ class RiverEditor extends React.Component {
             },
             () => this.handleDateTimeChange(this.state.dateString, this.state.hours, this.state.minutes)
         );
-    }
+    } //handleDateChange
 
     handleHoursChange(event) {
         this.setState(
             { hours: event.target.value },
             () => this.handleDateTimeChange(this.state.dateString, this.state.hours, this.state.minutes)
         );
-    }
+    } //handleHoursChange
 
     handleMinutesChange(event) {
         this.setState({ minutes: event.target.value },
             () => this.handleDateTimeChange(this.state.dateString, this.state.hours, this.state.minutes)
         );
-    }
+    } //handleMinutesChange
 
     /**
      * Set state template string for scalingDate
@@ -109,7 +143,7 @@ class RiverEditor extends React.Component {
      */
     handleDateTimeChange(date, hours, minutes) {
         this.setState({ scalingDate: `${date}T${hours}:${minutes}:00.000Z` });
-    }
+    } //handleDateTimeChange
 
     handleRiverSelect(value) {
         if (!value) {
@@ -130,9 +164,10 @@ class RiverEditor extends React.Component {
                 typeRiver    : value.typeRiver
             });
         }
-    }
+    } //handleRiverSelect
 
-    handleRiverAdd() {
+    handleRiverAdd(e) {
+        e.preventDefault();
 
         let expression = new RegExp('\\d{4}\\-\\d{2}\\-\\d{2}\\T\\d{2}\\:\\d{2}\\:00.000Z');
 
@@ -149,14 +184,10 @@ class RiverEditor extends React.Component {
         () => {
             // проверка на соответсвие строки из инпута, шаблонной регулярке
             if ( expression.test(this.state.scalingDate) ) {
-                console.log('RegExp-success');
-                console.log('expression', expression);
-                console.log('this.state.scalingDate', this.state.scalingDate);
-                
                 const newRiver = {
                     id           : this.state.id,
                     name         : this.state.name,
-                    hydroPost    : this.state.hydroPost || 'Полноват',
+                    hydroPost    : this.state.hydroPost,
                     levelToday   : this.state.levelToday,
                     levelDelta   : this.state.levelDelta,
                     levelAPPG    : this.state.levelAPPG,
@@ -181,8 +212,11 @@ class RiverEditor extends React.Component {
                     criticalLevelTugiyany: '',
                     comment      : '',
                     dateString  : '01-01-1900',
-                    hours: '09',
-                    minutes: '00'
+                    hours: '08',
+                    minutes: '00',
+                    isError: false,
+                    messageText: '',
+                    messageClassName: ''
                 },
                 () => this.handleDateTimeChange(
                     ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value,
@@ -190,16 +224,18 @@ class RiverEditor extends React.Component {
                     ReactDOM.findDOMNode(this.refs.minutesInput).value
                 ));
             } else {
-                // TODO: сделать вывод сообщения об ошибке
-                console.log('Дата и время установлены не правильно');
-                this.setState({ scalingDate:
-                    `${
-                        ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value
-                    }T${
-                        ReactDOM.findDOMNode(this.refs.hoursInput).value
-                    }:${
-                        ReactDOM.findDOMNode(this.refs.minutesInput).value
-                    }:00.000Z`
+                this.setState({ 
+                    scalingDate:
+                        `${
+                            ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value
+                        }T${
+                            ReactDOM.findDOMNode(this.refs.hoursInput).value
+                        }:${
+                            ReactDOM.findDOMNode(this.refs.minutesInput).value
+                        }:00.000Z`,
+                    isError: true,
+                    messageText: 'Дата и время установлены не правильно. Используйте формат: ГГГГ-ММ-ДД чч:мм',
+                    messageClassName: 'alert-danger'
                 });
                 return;
             }
@@ -208,7 +244,8 @@ class RiverEditor extends React.Component {
 
     }  // handleRiverAdd
 
-    handleFormClear() {
+    handleFormClear(e) {
+        e.preventDefault();
         this.setState({
             id           : '',
             name         : '',
@@ -222,8 +259,10 @@ class RiverEditor extends React.Component {
             criticalLevelTugiyany: '',
             comment      : '',
             dateString  : '01-01-1900',
-            hours: '09',
-            minutes: '00'
+            hours: '08',
+            minutes: '00',
+            isError: false,
+            messageText: ''
         },
         () => this.handleDateTimeChange(
             ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value,
@@ -234,13 +273,9 @@ class RiverEditor extends React.Component {
 
     render() {
         return (
-
-            <div>
-
+            <div className='RiverEditor'>
                 <div className='row'>
-
                     <div className='col-lg-12'>
-
                         <div className='well bs-component'>
                             <form className='form-horizontal'>
                                 <fieldset>
@@ -388,23 +423,27 @@ class RiverEditor extends React.Component {
                                             />
                                         </div>
                                     </div>
-                                    <div className='form-group'>
-                                        <div className='alert alert-danger'>
-                                            Так будет выглядеть сообщение об ошибке
-                                        </div>
-                                    </div>
+                                    
+                                    {/* Message for Form */}
+                                    <MessageForForm 
+                                        isError={this.state.isError} 
+                                        messageText={this.state.messageText}
+                                        messageClassName={this.state.messageClassName}
+                                    />
+                                    {/* Message for Form */}
+
                                     <div className='form-group'>
                                         <div className='col-lg-11 col-lg-offset-1'>
                                             <button 
                                                 className='btn btn-default Rivers__Editor_formButton'
-                                                onClick={() => this.handleFormClear()}
+                                                onClick={(e) => this.handleFormClear(e)}
                                             >
                                                 Очистить
                                             </button>
                                             <button
                                                 className='btn btn-primary Rivers__Editor_formButton'
                                                 disabled={(this.state.name && this.state.levelToday)? false : true}
-                                                onClick={() => this.handleRiverAdd()}
+                                                onClick={(e) => this.handleRiverAdd(e)}
                                             >
                                                 Сохранить
                                             </button>
@@ -413,43 +452,9 @@ class RiverEditor extends React.Component {
                                 </fieldset>
                             </form>
                         </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div className='RiverEditor'>
-
-                    <input
-                        type='text'
-                        className='RiverEditor__title'
-                        placeholder='Enter river name'
-                        value={this.state.name}
-                        onChange={(e) => this.handleNameChange(e)}
-                    />
-                    <textarea
-                        placeholder='Enter comment text'
-                        rows={5}
-                        className='RiverEditor__text'
-                        value={this.state.comment}
-                        onChange={(e) => this.handleCommentChange(e)}
-                    />
-                    <div className='RiverEditor__footer'>
-                        <button
-                            className='RiverEditor__button'
-                            disabled={!this.state.name}
-                            onClick={() => this.handleRiverAdd()}
-                        >
-                            Add
-                        </button>
                     </div>
                 </div>
-
             </div>
-
-
         );
     }
 } //RiverEditor
