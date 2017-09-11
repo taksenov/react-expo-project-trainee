@@ -62,7 +62,7 @@ class RiverEditor extends React.Component {
     } // handleCommentChange
 
     handleLevelTodayChange(event) {
-        let isNumbers = event.target.value;
+        let levelNumbers = event.target.value;
         let expression = new RegExp('\\d*');
 
         if (!event.target.value) {
@@ -76,9 +76,9 @@ class RiverEditor extends React.Component {
             });
         } else {
             // проверим, что в инпут введены цифры
-            if ( expression.test(isNumbers) && isNumeric(isNumbers) ) {
+            if ( expression.test(levelNumbers) && isNumeric(levelNumbers) ) {
                 // отсечем ввод шестнадцатеричных
-                if ( isNumbers.indexOf('x') !== -1 && isNumbers.indexOf('X') !== -1 ) {
+                if ( levelNumbers.indexOf('x') !== -1 && levelNumbers.indexOf('X') !== -1 ) {
                     this.setState({ 
                         isError: true,
                         messageText: 'Разрешены только цифры',
@@ -274,185 +274,194 @@ class RiverEditor extends React.Component {
     render() {
         return (
             <div className='RiverEditor'>
-                <div className='row'>
-                    <div className='col-lg-12'>
-                        <div className='well bs-component'>
-                            <form className='form-horizontal'>
-                                <fieldset>
-                                    <legend>Измерения уровня воды в реке</legend>
+                <div className='well bs-component'>
+                    <form className='form-horizontal'>
+                        <fieldset>
+                            <legend>Добавить новое измерение</legend>
 
-                                    <div className='form-group'>
-                                        <label htmlFor='inputDate' className='col-lg-1 control-label'>
-                                            Дата
-                                        </label>
-                                        <div className='col-lg-5'>
+                            {/* Scaling date */}                                    
+                            <div className='form-group'>
+                                <label htmlFor='inputDate' className='col-lg-1 control-label'>
+                                    Дата
+                                </label>
+                                <div className='col-lg-5'>
 
-                                            <DatePicker
-                                                className='form-control'
-                                                dateFormat='YYYY-MM-DD'
-                                                selected={this.state.dateVisible}
-                                                onChange={(value) => this.handleDateChange(value)}
-                                                ref='datePicker'
-                                            />
-                                            <span className='help-block'>
-                                                Все поля обязательны для заполнения
-                                            </span>
-                                        </div>
-                                        <label htmlFor='inputHours' className='col-lg-1 control-label'>
-                                            ЧЧ
-                                        </label>
-                                        <div className='col-lg-2'>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                id='inputHours'
-                                                placeholder='ЧЧ'
-                                                value={this.state.hours}
-                                                onChange={(e) => this.handleHoursChange(e)}
-                                                disabled={false}
-                                                ref='hoursInput'
-                                            />
-                                        </div>
-                                        <label htmlFor='inputMinutes' className='col-lg-1 control-label'>
-                                            ММ
-                                        </label>
-                                        <div className='col-lg-2'>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                id='inputMinutes'
-                                                placeholder='ММ'
-                                                value={this.state.minutes}
-                                                onChange={(e) => this.handleMinutesChange(e)}
-                                                disabled={false}
-                                                ref='minutesInput'
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className='form-group'>
-                                        <label htmlFor='RiversSelect' className='col-lg-1 control-label'>
-                                            Река
-                                        </label>
-                                        <div className='col-lg-11'>
-                                            <Select
-                                                id='RiversSelect'
-                                                name='Rivers'
-                                                searchable={false}
-                                                value={this.state.name}
-                                                onChange={(val) => this.handleRiverSelect(val)}
-                                                selectValue={this.state.name}
-                                                options={optionsRiver}
-                                                clearable={true}
-                                                placeholder={this.state.name !== '' ? this.state.name : 'Select...'}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className='form-group'>
-                                        <label htmlFor='inputHydroPost' className='col-lg-1 control-label'>
-                                            Гидропост
-                                        </label>
-                                        <div className='col-lg-11'>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                id='inputHydroPost'
-                                                placeholder='Гидропост'
-                                                value={this.state.hydroPost}
-                                                disabled={true}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className='form-group'>
-                                        <label htmlFor='inputLevelToday' className='col-lg-1 control-label'>
-                                            Уровень
-                                        </label>
-                                        <div className='col-lg-3'>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                id='inputLevelToday'
-                                                placeholder='Уровень воды'
-                                                value={this.state.levelToday}
-                                                disabled={ this.state.name === '' ? true : false }
-                                                onChange={(e) => this.handleLevelTodayChange(e)}
-                                            />
-                                        </div>
-                                        <label htmlFor='inputLevelDelta' className='col-lg-1 control-label'>
-                                            Динамика
-                                        </label>
-                                        <div className='col-lg-3'>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                id='inputLevelDelta'
-                                                placeholder='Динамика'
-                                                value={this.state.levelDelta}
-                                                disabled={true}
-                                            />
-                                        </div>
-                                        <label htmlFor='inputLevelAPPG' className='col-lg-1 control-label'>
-                                            АППГ
-                                        </label>
-                                        <div className='col-lg-3'>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                id='inputLevelAPPG'
-                                                placeholder='АППГ'
-                                                value={this.state.levelAPPG}
-                                                disabled={true}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className='form-group'>
-                                        <label htmlFor='textComment' className='col-lg-1 control-label'>
-                                            Примечание
-                                        </label>
-                                        <div className='col-lg-11'>
-                                            <textarea
-                                                className='RiverEditor__text form-control'
-                                                rows={3}
-                                                id='textComment'
-                                                disabled={this.state.name === '' ? true : false}
-                                                value={!this.state.comment ? 'Чисто' : this.state.comment}
-                                                onChange={(e) => this.handleCommentChange(e)}
-                                            />
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Message for Form */}
-                                    <MessageForForm 
-                                        isError={this.state.isError} 
-                                        messageText={this.state.messageText}
-                                        messageClassName={this.state.messageClassName}
+                                    <DatePicker
+                                        className='form-control'
+                                        dateFormat='YYYY-MM-DD'
+                                        selected={this.state.dateVisible}
+                                        onChange={(value) => this.handleDateChange(value)}
+                                        ref='datePicker'
                                     />
-                                    {/* Message for Form */}
+                                    <span className='help-block'>
+                                        Все поля обязательны для заполнения
+                                    </span>
+                                </div>
+                                <label htmlFor='inputHours' className='col-lg-1 control-label'>
+                                    ЧЧ
+                                </label>
+                                <div className='col-lg-2'>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='inputHours'
+                                        placeholder='ЧЧ'
+                                        value={this.state.hours}
+                                        onChange={(e) => this.handleHoursChange(e)}
+                                        disabled={false}
+                                        ref='hoursInput'
+                                    />
+                                </div>
+                                <label htmlFor='inputMinutes' className='col-lg-1 control-label'>
+                                    ММ
+                                </label>
+                                <div className='col-lg-2'>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='inputMinutes'
+                                        placeholder='ММ'
+                                        value={this.state.minutes}
+                                        onChange={(e) => this.handleMinutesChange(e)}
+                                        disabled={false}
+                                        ref='minutesInput'
+                                    />
+                                </div>
+                            </div>
+                            {/* Scaling date */}        
 
-                                    <div className='form-group'>
-                                        <div className='col-lg-11 col-lg-offset-1'>
-                                            <button 
-                                                className='btn btn-default Rivers__Editor_formButton'
-                                                onClick={(e) => this.handleFormClear(e)}
-                                            >
-                                                Очистить
-                                            </button>
-                                            <button
-                                                className='btn btn-primary Rivers__Editor_formButton'
-                                                disabled={(this.state.name && this.state.levelToday)? false : true}
-                                                onClick={(e) => this.handleRiverAdd(e)}
-                                            >
-                                                Сохранить
-                                            </button>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
+                            {/* River */}
+                            <div className='form-group'>
+                                <label htmlFor='RiversSelect' className='col-lg-1 control-label'>
+                                    Река
+                                </label>
+                                <div className='col-lg-11'>
+                                    <Select
+                                        id='RiversSelect'
+                                        name='Rivers'
+                                        searchable={false}
+                                        value={this.state.name}
+                                        onChange={(val) => this.handleRiverSelect(val)}
+                                        selectValue={this.state.name}
+                                        options={optionsRiver}
+                                        clearable={true}
+                                        placeholder={this.state.name !== '' ? this.state.name : 'Select...'}
+                                    />
+                                </div>
+                            </div>
+                            {/* River */}
+
+                            {/* Hydropost */}                            
+                            <div className='form-group'>
+                                <label htmlFor='inputHydroPost' className='col-lg-1 control-label'>
+                                    Гидропост
+                                </label>
+                                <div className='col-lg-11'>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='inputHydroPost'
+                                        placeholder='Гидропост'
+                                        value={this.state.hydroPost}
+                                        disabled={true}
+                                    />
+                                </div>
+                            </div>
+                            {/* Hydropost */}
+
+                            {/* Levels scalling */}                                    
+                            <div className='form-group'>
+                                <label htmlFor='inputLevelToday' className='col-lg-1 control-label'>
+                                    Уровень
+                                </label>
+                                <div className='col-lg-3'>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='inputLevelToday'
+                                        placeholder='Уровень воды'
+                                        value={this.state.levelToday}
+                                        disabled={ this.state.name === '' ? true : false }
+                                        onChange={(e) => this.handleLevelTodayChange(e)}
+                                    />
+                                </div>
+                                <label htmlFor='inputLevelDelta' className='col-lg-1 control-label'>
+                                    Динамика
+                                </label>
+                                <div className='col-lg-3'>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='inputLevelDelta'
+                                        placeholder='Динамика'
+                                        value={this.state.levelDelta}
+                                        disabled={true}
+                                    />
+                                </div>
+                                <label htmlFor='inputLevelAPPG' className='col-lg-1 control-label'>
+                                    АППГ
+                                </label>
+                                <div className='col-lg-3'>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='inputLevelAPPG'
+                                        placeholder='АППГ'
+                                        value={this.state.levelAPPG}
+                                        disabled={true}
+                                    />
+                                </div>
+                            </div>
+                            {/* Levels scalling */}        
+
+                            {/* comment */}
+                            <div className='form-group'>
+                                <label htmlFor='textComment' className='col-lg-1 control-label'>
+                                    Примечание
+                                </label>
+                                <div className='col-lg-11'>
+                                    <textarea
+                                        className='RiverEditor__text form-control'
+                                        rows={3}
+                                        id='textComment'
+                                        disabled={this.state.name === '' ? true : false}
+                                        value={!this.state.comment ? 'Чисто' : this.state.comment}
+                                        onChange={(e) => this.handleCommentChange(e)}
+                                    />
+                                </div>
+                            </div>
+                            {/* comment */}
+                            
+                            {/* Message for Form */}
+                            <MessageForForm 
+                                isError={this.state.isError} 
+                                messageText={this.state.messageText}
+                                messageClassName={this.state.messageClassName}
+                            />
+                            {/* Message for Form */}
+
+                            {/* Buttons group */}                            
+                            <div className='form-group'>
+                                <div className='col-lg-11 col-lg-offset-1'>
+                                    <button 
+                                        className='btn btn-default Rivers__Editor_formButton'
+                                        onClick={(e) => this.handleFormClear(e)}
+                                    >
+                                        Очистить
+                                    </button>
+                                    <button
+                                        className='btn btn-primary Rivers__Editor_formButton'
+                                        disabled={(this.state.name && this.state.levelToday)? false : true}
+                                        onClick={(e) => this.handleRiverAdd(e)}
+                                    >
+                                        Сохранить
+                                    </button>
+                                </div>
+                            </div>
+                            {/* Buttons group */}
+
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         );
