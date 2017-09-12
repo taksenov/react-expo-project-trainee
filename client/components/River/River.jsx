@@ -1,22 +1,111 @@
 import React from 'react';
+import Toastr from '../Toastr/Toastr.jsx';
+import {ToastContainer,ToastMessage,} from 'react-toastr';
 
 import './River.style.less';
 
+console.dir('~~~Toastr~~~');
+console.dir(Toastr);
+console.dir('~~~Toastr~~~');
+
 class River extends React.Component {
+
+    componentDidMount() {
+        () => Toastr.addRiverSuccess();
+        console.dir('~~~Toastr~~~11111');
+    }
+
     render() {
 
         return (
 
             <tr className='River'>
-                <td>{this.props.scalingDate}</td>
-                <td>{this.props.name}</td>
-                <td>{this.props.hydroPost}</td>
-                <td>{this.props.levelToday}</td>
-                <td>{this.props.levelDelta}</td>
-                <td>{this.props.levelAPPG}</td>
-                <td>{this.props.comment}</td>
                 <td>
-                    <span className='glyphicon glyphicon-pencil River__action-icon' aria-hidden='true' ></span>
+                    <span className='hidden-md hidden-lg'>
+                        {this.props.scalingDate}
+                    </span>
+                    <input
+                        type='text'
+                        className='form-control hidden-xs hidden-sm'
+                        placeholder='ГГГГ-ММ-ДД чч:мм'
+                        value={this.props.scalingDate}
+                        disabled={true}
+                    />
+                </td>
+                <td>
+                    <span className='hidden-md hidden-lg'>
+                        {this.props.name}
+                    </span>                
+                    <input
+                        type='text'
+                        className='form-control hidden-xs hidden-sm'
+                        placeholder='123'
+                        value={this.props.name}
+                        disabled={true}
+                    />                    
+                </td>
+                <td>
+                    <span className='hidden-md hidden-lg'>
+                        {this.props.hydroPost}
+                    </span>                
+                    <input
+                        type='text'
+                        className='form-control hidden-xs hidden-sm'
+                        placeholder='123'
+                        value={this.props.hydroPost}
+                        disabled={true}
+                    />                    
+                </td>
+                <td>
+                    <span className='hidden-md hidden-lg'>
+                        {this.props.levelToday}
+                    </span>                
+                    <input
+                        type='text'
+                        className='form-control hidden-xs hidden-sm'
+                        placeholder='123'
+                        value={this.props.levelToday}
+                        disabled={true}
+                    />                    
+                </td>
+                <td>
+                    <span className='hidden-md hidden-lg'>
+                        {this.props.levelDelta}
+                    </span>                
+                    <input
+                        type='text'
+                        className='form-control hidden-xs hidden-sm'
+                        placeholder='123'
+                        value={this.props.levelDelta}
+                        disabled={true}
+                    />                    
+                </td>
+                <td>
+                    <span className='hidden-md hidden-lg'>
+                        {this.props.levelAPPG}
+                    </span>                
+                    <input
+                        type='text'
+                        className='form-control hidden-xs hidden-sm'
+                        placeholder='123'
+                        value={this.props.levelAPPG}
+                        disabled={true}
+                    />                    
+                </td>
+                <td>
+                    <span className='hidden-md hidden-lg'>
+                        {this.props.comment}
+                    </span>                
+                    <input
+                        type='text'
+                        className='form-control hidden-xs hidden-sm'
+                        placeholder='123'
+                        value={this.props.comment}
+                        disabled={true}
+                    />                    
+                </td>
+                <td>
+                    <span className='glyphicon glyphicon-pencil River__action-icon hidden-xs hidden-sm' aria-hidden='true' ></span>
                     <span className='glyphicon glyphicon-remove River__action-icon' aria-hidden='true' onClick={this.props.onDelete}></span>
                 </td>
             </tr>
@@ -26,19 +115,3 @@ class River extends React.Component {
 } //River
 
 export default River;
-
-
-
-// {/*
-// <div className='River'>
-//     <span className='River__del-icon' onClick={this.props.onDelete}> × </span>
-//     {
-//         this.props.name
-//             ?
-//             <h4 className='River__name'>{this.props.name}</h4>
-//             :
-//             null
-//     }
-//     <div className='River__text'>{this.props.children}</div>
-// </div>
-// */}

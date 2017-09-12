@@ -277,7 +277,7 @@ class RiverEditor extends React.Component {
                 <div className='well bs-component'>
                     <form className='form-horizontal'>
                         <fieldset>
-                            <legend>Добавить новое измерение</legend>
+                            <legend>Добавить запись</legend>
 
                             {/* Scaling date */}                                    
                             <div className='form-group'>

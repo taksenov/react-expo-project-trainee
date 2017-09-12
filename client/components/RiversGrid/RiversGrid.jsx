@@ -8,7 +8,7 @@ class RiversGrid extends React.Component {
     render() {
         return (
             <div className='RiversGrid'>
-                <table className='table table-striped table-hover '>
+                <table className='table table-striped table-hover table-responsive'>
                     <thead>
                         <tr>
                             <th>Дата</th>

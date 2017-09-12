@@ -36,7 +36,8 @@
     "react-dom": "^15.6.1",
     "react-masonry-component": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "react-select": "^1.0.0-rc.5"
+    "react-select": "^1.0.0-rc.5",
+    "react-toastr": "^2.9.3"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
