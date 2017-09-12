@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import NavBar from '../NavBar/NavBar.jsx';
+import ToastrContainerBasic from 'react-toastr-basic';
 import HomePage from '../HomePage/HomePage.jsx';
 import NotesMain from '../NotesMain/NotesMain.jsx';
 import RiversMain from '../RiversMain/RiversMain.jsx';
@@ -14,6 +15,8 @@ class App extends React.Component {
 
                 <NavBar />
 
+
+
                 {/* Main container */}
                 <div className='container'>
 
@@ -21,6 +24,7 @@ class App extends React.Component {
                     <div className='page-header'></div>
                     {/* Workaround for NavBar height */}
 
+                    
                     <div className='EddsData__content'>
                         <Switch>
                             <Route exact path='/' component={HomePage} />
@@ -28,6 +32,7 @@ class App extends React.Component {
                             <Route path='/rivers' component={RiversMain} />
                             <Route path='/fires' component={FiresMain} />
                         </Switch>
+                        <ToastrContainerBasic />
                     </div>
 
                 </div>
