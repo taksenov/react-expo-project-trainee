@@ -10,6 +10,9 @@ import * as jQuery from 'jquery';
 import '../node_modules/bootstrap/dist/js/bootstrap.min';
 import './commonless/bootswatchTheme/main.less';
 
+//ANIMATE-CSS SUPPORT
+import './commonless/animateCSS/animate.min.css';
+
 // COMPONENTS
 import App from './components/App/App.jsx';
 

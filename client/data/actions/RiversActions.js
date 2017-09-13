@@ -1,3 +1,5 @@
+import {Toast,ToastSuccess,ToastDanger} from 'react-toastr-basic';
+
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import RiversActionTypes from '../actiontypes/RiversActionTypes';
 
@@ -26,21 +28,33 @@ const RiverActions = {
 
     createRiver(river) {
         api.createRiver(river)
-            .then(() =>
-                this.loadRivers()
+            .then(
+                () => {
+                    this.loadRivers();
+                    ToastSuccess('Ура!', 'Данные по уровню воды добавлены');
+                }
             )
-            .catch(err =>
-                console.error(err)
+            .catch(
+                err => {
+                    console.error(err);
+                    ToastDanger('Ошибка', err);
+                }
             );
     },
 
     deleteRiver(riverId) {
         api.deleteRiver(riverId)
-            .then(() =>
-                this.loadRivers()
+            .then(
+                () => {
+                    this.loadRivers();
+                    Toast('Внимание', 'Данные по уровню воды удалены');
+                }
             )
-            .catch(err =>
-                console.error(err)
+            .catch(
+                err => {
+                    console.error(err);
+                    ToastDanger('Ошибка', err);
+                }
             );
     }
 };

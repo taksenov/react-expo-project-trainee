@@ -15,7 +15,7 @@ class App extends React.Component {
 
                 <NavBar />
 
-
+                <ToastrContainerBasic />
 
                 {/* Main container */}
                 <div className='container'>
@@ -32,7 +32,6 @@ class App extends React.Component {
                             <Route path='/rivers' component={RiversMain} />
                             <Route path='/fires' component={FiresMain} />
                         </Switch>
-                        <ToastrContainerBasic />
                     </div>
 
                 </div>

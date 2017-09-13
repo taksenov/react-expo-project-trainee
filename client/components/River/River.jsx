@@ -1,19 +1,8 @@
 import React from 'react';
-import Toastr from '../Toastr/Toastr.jsx';
-import {ToastContainer,ToastMessage,} from 'react-toastr';
 
 import './River.style.less';
 
-console.dir('~~~Toastr~~~');
-console.dir(Toastr);
-console.dir('~~~Toastr~~~');
-
 class River extends React.Component {
-
-    componentDidMount() {
-        () => Toastr.addRiverSuccess();
-        console.dir('~~~Toastr~~~11111');
-    }
 
     render() {
 

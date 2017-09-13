@@ -6,7 +6,6 @@ import RiversActions from '../../data/actions/RiversActions';
 
 import RiverEditor from '../RiverEditor/RiverEditor.jsx';
 import RiversGrid from '../RiversGrid/RiversGrid.jsx';
-import Toastr from '../Toastr/Toastr.jsx';
 
 class RiversMain extends React.Component {
 
@@ -33,8 +32,6 @@ class RiversMain extends React.Component {
     render() {
         return (
             <div className='EddsData__RiversMain'>
-
-                <Toastr />
 
                 {/* Header */}
                 <div className='row'>
