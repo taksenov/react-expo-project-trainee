@@ -94,7 +94,7 @@ class River extends React.Component {
                     />                    
                 </td>
                 <td>
-                    <span className='glyphicon glyphicon-pencil River__action-icon hidden-xs hidden-sm' aria-hidden='true' ></span>
+                    <span className='glyphicon glyphicon-pencil River__action-icon hidden-xs hidden-sm' aria-hidden='true' onClick={()=>console.log('Edit River')}></span>
                     <span className='glyphicon glyphicon-remove River__action-icon' aria-hidden='true' onClick={this.props.onDelete}></span>
                 </td>
             </tr>
