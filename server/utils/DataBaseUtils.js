@@ -45,7 +45,8 @@ export function deleteNote(id) {
  * Rivers
  */
 export function listRivers() {
-    return River.find().sort({scalingDate:-1});
+    // return River.find().sort({scalingDate:-1});
+    return River.find().sort({scalingDate:-1}).limit(14);
 } //listRivers
 
 export function createRiver(data) {
