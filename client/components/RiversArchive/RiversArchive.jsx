@@ -4,7 +4,7 @@ import {Container} from 'flux/utils';
 import RiversStore from '../../data/stores/RiversStore';
 import RiversActions from '../../data/actions/RiversActions';
 
-import RiverEditor from '../RiverEditor/RiverEditor.jsx';
+import RiverFilter from '../RiverFilter/RiverFilter.jsx';
 import RiversGrid from '../RiversGrid/RiversGrid.jsx';
 
 class RiversArchive extends React.Component {
@@ -33,16 +33,10 @@ class RiversArchive extends React.Component {
         return (
             <div className='EddsData__RiversMain'>
 
-                <div>
-                    <span>
-                        Архив по рекам
-                    </span>
-                </div>
-
                 {/* RiverEditor */}
                 <div className='row'>
                     <div className='col-lg-12'>
-                        <RiverEditor onRiverAdd={this.handleRiverAdd} />
+                        <RiverFilter />
                     </div>
                 </div>
 
