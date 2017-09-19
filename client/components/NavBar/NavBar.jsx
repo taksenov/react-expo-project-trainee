@@ -17,27 +17,13 @@ class NavBar extends React.Component {
                     <div className='navbar-collapse collapse' id='navbar-main'>
                         <ul className='nav navbar-nav'>
                             <li>
+                                <Link to='/rivers' className='NavBar__Rivers_link'>Реки</Link>
+                            </li>
+                            <li>
                                 <Link to='/notes' className='NavBar__Notes_link'>Notes</Link>  
                             </li>
                             <li>
-                                <Link to='/rivers' className='NavBar__Rivers_link'>Rivers</Link>
-                            </li>
-                            <li>
                                 <Link to='/fires' className='NavBar__Fires_link'>Fires</Link>
-                            </li>
-                            <li className='dropdown'>
-                                <a className='dropdown-toggle' data-toggle='dropdown' href='#' id='themes'>Реки <span className='caret'></span></a>
-                                <ul className='dropdown-menu' aria-labelledby='themes'>
-                                    <li>
-                                        <Link to='/rivers/form' className='NavBar__Rivers_link'>Форма ввода</Link>
-                                    </li>
-                                    <li>
-                                        <Link to='/rivers/archive' className='NavBar__Rivers_link'>Архив</Link>
-                                    </li>
-                                    <li>
-                                        <a href='../cosmo/'>Графики</a>
-                                    </li>
-                                </ul>
                             </li>
                             <li>
                                 <a href='../help/'>Help</a>

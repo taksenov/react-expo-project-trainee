@@ -32,8 +32,9 @@ class App extends React.Component {
                             <Route exact path='/' component={HomePage} />
                             <Route path='/notes' component={NotesMain} />
                             <Route path='/rivers' component={RiversMain} />
-                            <Route path='/rivers/form' component={RiversInputForm} />
-                            <Route path='/rivers/archive' component={RiversArchive} />
+                            <Route path='/riversForm' component={RiversMain} />
+                            <Route path='/riversArchive' component={RiversMain} />
+                            <Route path='/riversGraf' component={RiversMain} />
                             <Route path='/fires' component={FiresMain} />
                         </Switch>
                     </div>

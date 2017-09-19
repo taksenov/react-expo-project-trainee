@@ -1,13 +1,11 @@
 import React from 'react';
 import {Container} from 'flux/utils';
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom';
+import ClsNames from 'classnames';
 
 import RiversInputForm from '../RiversInputForm/RiversInputForm.jsx';
 import RiversArchive from '../RiversArchive/RiversArchive.jsx';
+import RiversGraf from '../RiversGraf/RiversGraf.jsx';
 
 import RiversStore from '../../data/stores/RiversStore';
 import RiversActions from '../../data/actions/RiversActions';
@@ -15,29 +13,21 @@ import RiversActions from '../../data/actions/RiversActions';
 import RiverEditor from '../RiverEditor/RiverEditor.jsx';
 import RiversGrid from '../RiversGrid/RiversGrid.jsx';
 
+let activeClass = 'active';
+let formCls = false;
+
 class RiversMain extends React.Component {
 
-    // static getStores() { 
-    //     return [RiversStore]; 
-    // } 
-
-    // static calculateState(prevState) { 
-    //     return RiversStore.getState(); 
-    // }
-
-    // componentWillMount() {
-    //     RiversActions.loadRivers();
-    // }
-
-    // handleRiverDelete(river) {
-    //     RiversActions.deleteRiver(river.id);
-    // }
-
-    // handleRiverAdd(riverData) {
-    //     RiversActions.createRiver(riverData);
-    // }
-
     render() {
+          
+        const TabsRiversMenuLink = ({ label, to, activeOnlyWhenExact }) => (
+            <Route path={to} exact={activeOnlyWhenExact} children={({ match }) => (
+                <li className={match ? 'active' : ''}>
+                    <Link to={to}>{label}</Link>
+                </li>
+            )}/>
+        ); //TabsRiversMenuLink
+
         return (
             <div className='EddsData__RiversMain'>
 
@@ -50,23 +40,19 @@ class RiversMain extends React.Component {
  
                 <Router>
                     <div>
-                    
+
+                        {/* Tabs */}
                         <ul className='nav nav-tabs'>
-                            <li className=''>
-                                <Link to='/rivers/form'>Форма ввода</Link>
-                            </li>
-                            <li className=''>
-                                <Link to='/rivers/archive'>Архив</Link>
-                            </li>
-                            <li className=''>
-                                <Link to='/rivers/form2'>Графики</Link>
-                            </li>
+                            <TabsRiversMenuLink to='/riversForm' label='Форма ввода' />
+                            <TabsRiversMenuLink to='/riversArchive' label='Архив' />
+                            <TabsRiversMenuLink to='/riversGraf' label='Графики' />
                         </ul>
 
+                        {/* Tabs Content */}
                         <div id='myTabContent' className='tab-content'>
-                            <Route exact path='/rivers/form' component={RiversInputForm}/>
-                            <Route path='/rivers/archive' component={RiversArchive}/>
-                            <Route path='/rivers/form2' component={RiversInputForm}/>
+                            <Route exact path='/riversForm' component={RiversInputForm}/>
+                            <Route path='/riversArchive' component={RiversArchive}/>
+                            <Route path='/riversGraf' component={RiversGraf}/>
                         </div>
                     
                     </div>
