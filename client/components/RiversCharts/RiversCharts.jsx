@@ -7,7 +7,7 @@ import RiversActions from '../../data/actions/RiversActions';
 import RiverEditor from '../RiverEditor/RiverEditor.jsx';
 import RiversGrid from '../RiversGrid/RiversGrid.jsx';
 
-class RiversGraf extends React.Component {
+class RiversCharts extends React.Component {
 
     static getStores() { 
         return [RiversStore]; 
@@ -59,4 +59,4 @@ class RiversGraf extends React.Component {
 
 } //RiversMain
 
-export default Container.create(RiversGraf);
+export default Container.create(RiversCharts);

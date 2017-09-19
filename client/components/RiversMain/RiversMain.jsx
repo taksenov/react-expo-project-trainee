@@ -1,20 +1,9 @@
 import React from 'react';
-import {Container} from 'flux/utils';
 import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom';
-import ClsNames from 'classnames';
 
 import RiversInputForm from '../RiversInputForm/RiversInputForm.jsx';
 import RiversArchive from '../RiversArchive/RiversArchive.jsx';
-import RiversGraf from '../RiversGraf/RiversGraf.jsx';
-
-import RiversStore from '../../data/stores/RiversStore';
-import RiversActions from '../../data/actions/RiversActions';
-
-import RiverEditor from '../RiverEditor/RiverEditor.jsx';
-import RiversGrid from '../RiversGrid/RiversGrid.jsx';
-
-let activeClass = 'active';
-let formCls = false;
+import RiversCharts from '../RiversCharts/RiversCharts.jsx';
 
 class RiversMain extends React.Component {
 
@@ -45,14 +34,14 @@ class RiversMain extends React.Component {
                         <ul className='nav nav-tabs'>
                             <TabsRiversMenuLink to='/riversForm' label='Форма ввода' />
                             <TabsRiversMenuLink to='/riversArchive' label='Архив' />
-                            <TabsRiversMenuLink to='/riversGraf' label='Графики' />
+                            <TabsRiversMenuLink to='/riversCharts' label='Графики' />
                         </ul>
 
                         {/* Tabs Content */}
                         <div id='myTabContent' className='tab-content'>
                             <Route exact path='/riversForm' component={RiversInputForm}/>
                             <Route path='/riversArchive' component={RiversArchive}/>
-                            <Route path='/riversGraf' component={RiversGraf}/>
+                            <Route path='/riversCharts' component={RiversCharts}/>
                         </div>
                     
                     </div>
