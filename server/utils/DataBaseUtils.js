@@ -49,6 +49,32 @@ export function listRivers() {
     return River.find().sort({scalingDate:-1}).limit(14);
 } //listRivers
 
+export function filterRiversOnlyYear(year) {
+    let yearLocal = year;
+    +yearLocal;
+    
+    return River.find({
+        scalingDate: {
+            '$gte': new Date(yearLocal, 1, 1),          //больше или равно чем Дата
+            '$lt': new Date(yearLocal+1, 1, 1)          //меньше чем Дата
+        },
+    }).sort({scalingDate:-1});
+} //filterRiversOnlyYear
+
+export function filterRivers(year, river) {
+    let riverLocal = river;
+    let yearLocal = year;
+    +yearLocal;
+    
+    return River.find({
+        scalingDate: {
+            '$gte': new Date(yearLocal, 1, 1),          //больше или равно чем Дата
+            '$lt': new Date(yearLocal+1, 1, 1)          //меньше чем Дата
+        },
+        name: riverLocal
+    }).sort({scalingDate:-1});
+} //filterRivers
+
 export function createRiver(data) {
     const river = new River({
         name         : data.name,
