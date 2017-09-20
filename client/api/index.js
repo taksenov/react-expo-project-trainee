@@ -27,6 +27,9 @@ export default {
     },
 
     filterRiversWithYearRiver(filterYear,filterRiver) {
+
+        if (arguments.length===0) return;
+
         return axios.get(`${apiPrefix}/filter-rivers-by-year-river`, 
             {
                 params: {
@@ -38,6 +41,9 @@ export default {
     },
 
     filterRiversWithYear(filterYear) {
+
+        if (arguments.length===0) return;
+
         return axios.get(`${apiPrefix}/filter-rivers-by-year`, 
             {
                 params: {
