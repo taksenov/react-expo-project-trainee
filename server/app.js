@@ -38,6 +38,14 @@ app.get('/rivers', (req, res) => {
     db.listRivers().then( data => res.send(data) );
 });
 
+app.get('/filter-rivers-by-year-river', (req, res) => {
+    db.filterRiversWithYearRiver(req.query.year,req.query.river).then( data => res.send(data) );
+});
+
+app.get('/filter-rivers-by-year', (req, res) => {
+    db.filterRiversWithYear(req.query.year).then( data => res.send(data) );
+});
+
 app.post('/rivers', (req, res) => {
     db.createRiver(req.body).then( data => res.send(data) );
 });

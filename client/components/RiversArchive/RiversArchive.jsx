@@ -29,12 +29,12 @@ class RiversArchive extends React.Component {
         RiversActions.createRiver(riverData);
     }
 
-    handleRiverFilter(year) {
-        // RiversActions.createRiver(riverData);
+    handleFilterRiversWithYear(year) {
+        RiversActions.setFilterRiversWithYear(year);
     }
 
-    handleRiverYearFilter(year,river) {
-        // RiversActions.createRiver(riverData);
+    handleFilterRivers(year,river) {
+        RiversActions.setFilterRiversWithYearRiver(year,river);
     }
 
     render() {
@@ -45,8 +45,8 @@ class RiversArchive extends React.Component {
                 <div className='row'>
                     <div className='col-lg-12'>
                         <RiverFilter 
-                            onRiverFilter={this.handleRiverFilter} 
-                            onRiverYearFilter={this.handleRiverYearFilter} 
+                            onRiversFilterWithYear={this.handleFilterRiversWithYear} 
+                            onRiversFilterWithYearRiver={this.handleFilterRivers} 
                         />
                     </div>
                 </div>

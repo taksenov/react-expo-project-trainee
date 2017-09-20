@@ -26,6 +26,27 @@ export default {
         return axios.get(`${apiPrefix}/rivers`);
     },
 
+    filterRiversWithYearRiver(filterYear,filterRiver) {
+        return axios.get(`${apiPrefix}/filter-rivers-by-year-river`, 
+            {
+                params: {
+                    year: filterYear,
+                    river: filterRiver
+                }
+            }
+        );
+    },
+
+    filterRiversWithYear(filterYear) {
+        return axios.get(`${apiPrefix}/filter-rivers-by-year`, 
+            {
+                params: {
+                    year: filterYear
+                }
+            }
+        );
+    },
+
     createRiver(data) {
         return axios.post(`${apiPrefix}/rivers`, data);
     },

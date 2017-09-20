@@ -34,10 +34,10 @@ let optionsYears = [
 ];
 
 let optionsRiver = [
-    { value: 'Все',   label: 'Все реки'},
-    { value: 'Обь',   label: 'Обь'     },
-    { value: 'Амня',  label: 'Амня',   },
-    { value: 'Казым', label: 'Казым',  }
+    { value: 'Все реки',   label: 'Все реки'},
+    { value: 'р. Обь',   label: 'р. Обь'     },
+    { value: 'р. Амня',  label: 'р. Амня',   },
+    { value: 'р. Казым', label: 'р. Казым',  }
 ];
 
 class RiverFilter extends React.Component {
@@ -73,83 +73,18 @@ class RiverFilter extends React.Component {
         }
     } //handleYearSelect
 
-    // handleRiverAdd(e) {
-    //     e.preventDefault();
-
-    //     let expression = new RegExp('\\d{4}\\-\\d{2}\\-\\d{2}\\T\\d{2}\\:\\d{2}\\:00.000Z');
-
-    //     this.setState({ scalingDate:
-    //         `${
-    //             ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value
-    //         }T${
-    //             ReactDOM.findDOMNode(this.refs.hoursInput).value
-    //         }:${
-    //             ReactDOM.findDOMNode(this.refs.minutesInput).value
-    //         }:00.000Z`
-    //     },
-    //     //setState callback
-    //     () => {
-    //         // проверка на соответсвие строки из инпута, шаблонной регулярке
-    //         if ( expression.test(this.state.scalingDate) ) {
-    //             const newRiver = {
-    //                 id           : this.state.id,
-    //                 name         : this.state.name,
-    //                 hydroPost    : this.state.hydroPost,
-    //                 levelToday   : this.state.levelToday,
-    //                 levelDelta   : this.state.levelDelta,
-    //                 levelAPPG    : this.state.levelAPPG,
-    //                 typeRiver    : this.state.typeRiver,
-    //                 scalingDate  : this.state.scalingDate,
-    //                 criticalLevelPashtory: this.state.criticalLevelPashtory || 901,
-    //                 criticalLevelTugiyany: this.state.criticalLevelTugiyany || 938,
-    //                 comment      : this.state.comment
-    //             };
-
-    //             // this.props.onRiverAdd(newRiver); 
-    //             this.setState({
-    //                 id           : '',
-    //                 name         : '',
-    //                 hydroPost    : '',
-    //                 levelToday   : '',
-    //                 levelDelta   : '',
-    //                 levelAPPG    : '',
-    //                 typeRiver    : '',
-    //                 scalingDate  : '',
-    //                 criticalLevelPashtory: '',
-    //                 criticalLevelTugiyany: '',
-    //                 comment      : '',
-    //                 dateString  : '01-01-1900',
-    //                 hours: '08',
-    //                 minutes: '00',
-    //                 isError: false,
-    //                 messageText: '',
-    //                 messageClassName: ''
-    //             },
-    //             () => this.handleDateTimeChange(
-    //                 ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value,
-    //                 ReactDOM.findDOMNode(this.refs.hoursInput).value, 
-    //                 ReactDOM.findDOMNode(this.refs.minutesInput).value
-    //             ));
-    //         } else {
-    //             this.setState({ 
-    //                 scalingDate:
-    //                     `${
-    //                         ReactDOM.findDOMNode(this.refs.datePicker).getElementsByTagName('input')[0].value
-    //                     }T${
-    //                         ReactDOM.findDOMNode(this.refs.hoursInput).value
-    //                     }:${
-    //                         ReactDOM.findDOMNode(this.refs.minutesInput).value
-    //                     }:00.000Z`,
-    //                 isError: true,
-    //                 messageText: 'Дата и время установлены не правильно. Используйте формат: ГГГГ-ММ-ДД чч:мм',
-    //                 messageClassName: 'alert-danger'
-    //             });
-    //             return;
-    //         }
-    //     }
-    //     );
-
-    // }  // handleRiverAdd
+    handleSetFilter(e) {
+        e.preventDefault();
+        if ( !this.state.river ) {
+            this.props.onRiversFilterWithYear(this.state.year);
+        } else {
+            this.props.onRiversFilterWithYearRiver(this.state.year,this.state.river);
+        }
+        this.setState({
+            year: '',
+            river: '',
+        });
+    }  // handleSetFilter
 
     handleClearFilter(e) {
         e.preventDefault();
@@ -226,7 +161,7 @@ class RiverFilter extends React.Component {
                                     </button>
                                     <button
                                         className='btn btn-primary Rivers__Editor_formButton'
-                                        disabled={(this.state.year && this.state.river)? false : true}
+                                        disabled={(this.state.year)? false : true}
                                         onClick={(e) => this.handleSetFilter(e)}
                                     >
                                         Применить

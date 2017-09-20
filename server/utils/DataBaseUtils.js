@@ -49,9 +49,9 @@ export function listRivers() {
     return River.find().sort({scalingDate:-1}).limit(14);
 } //listRivers
 
-export function filterRiversOnlyYear(year) {
+export function filterRiversWithYear(year) {
     let yearLocal = year;
-    +yearLocal;
+    yearLocal=+yearLocal;
     
     return River.find({
         scalingDate: {
@@ -59,20 +59,35 @@ export function filterRiversOnlyYear(year) {
             '$lt': new Date(yearLocal+1, 1, 1)          //меньше чем Дата
         },
     }).sort({scalingDate:-1});
-} //filterRiversOnlyYear
+} //filterRiversWithYear
 
-export function filterRivers(year, river) {
+export function filterRiversWithYearRiver(year, river) {
     let riverLocal = river;
     let yearLocal = year;
-    +yearLocal;
+    yearLocal=+yearLocal;
     
-    return River.find({
-        scalingDate: {
-            '$gte': new Date(yearLocal, 1, 1),          //больше или равно чем Дата
-            '$lt': new Date(yearLocal+1, 1, 1)          //меньше чем Дата
-        },
-        name: riverLocal
-    }).sort({scalingDate:-1});
+    switch(riverLocal) {
+    case 'Все реки': {
+        // TODO: дублирование, вызывай filterRiversWithYear(yearLocal)
+        return River.find({
+            scalingDate: {
+                '$gte': new Date(yearLocal, 1, 1),          //больше или равно чем Дата
+                '$lt': new Date(yearLocal+1, 1, 1)          //меньше чем Дата
+            },
+        }).sort({scalingDate:-1});
+    }
+
+    default: {
+        return River.find({
+            scalingDate: {
+                '$gte': new Date(yearLocal, 1, 1),          //больше или равно чем Дата
+                '$lt': new Date(yearLocal+1, 1, 1)          //меньше чем Дата
+            },
+            name: riverLocal
+        }).sort({scalingDate:-1});
+    }
+    } //switch(riverLocal)
+
 } //filterRivers
 
 export function createRiver(data) {
