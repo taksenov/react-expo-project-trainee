@@ -1,4 +1,7 @@
 import React from 'react';
+import ClsNames from 'classnames';
+
+import AppConstants from '../../data/constants/AppConstants';
 
 import './River.style.less';
 
@@ -6,9 +9,21 @@ class River extends React.Component {
 
     render() {
 
+        let riverClass = 'River ';
+        let tableColorClass = '';
+        let level = this.props.levelToday;
+
+        if (level >= (AppConstants.CRITICAL_LEVEL_PASHTORY - 10) && level <= (AppConstants.CRITICAL_LEVEL_PASHTORY)) {
+            tableColorClass = 'info';
+        } else if (level > (AppConstants.CRITICAL_LEVEL_PASHTORY) && level <= (AppConstants.CRITICAL_LEVEL_TUGIYANY)) {
+            tableColorClass = 'warning';
+        } else if (level > (AppConstants.CRITICAL_LEVEL_TUGIYANY)) {
+            tableColorClass = 'danger';
+        }
+
         return (
 
-            <tr className='River'>
+            <tr className={riverClass += tableColorClass}>
                 <td>
                     <span className='hidden-md hidden-lg'>
                         {this.props.scalingDate}
