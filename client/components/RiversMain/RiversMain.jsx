@@ -39,9 +39,9 @@ class RiversMain extends React.Component {
 
                         {/* Tabs Content */}
                         <div id='myTabContent' className='tab-content'>
-                            <Route exact path='/riversForm' component={RiversInputForm}/>
-                            <Route path='/riversArchive' component={RiversArchive}/>
-                            <Route path='/riversCharts' component={RiversCharts}/>
+                            <Route exact path='/riversForm' component={RiversInputForm} />
+                            <Route path='/riversArchive' component={RiversArchive} />
+                            <Route path='/riversCharts' component={RiversCharts} />
                         </div>
                     
                     </div>
