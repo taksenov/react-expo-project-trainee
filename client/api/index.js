@@ -38,7 +38,21 @@ export default {
                 }
             }
         );
-    },
+    }, //filterRiversWithYearRiver
+
+    getRiverData(year,typeRiver) {
+        
+        if (arguments.length===0) return;
+
+        return axios.get(`${apiPrefix}/get-river-data`, 
+            {
+                params: {
+                    year: year,
+                    typeRiver: typeRiver
+                }
+            }
+        );
+    }, //getRiverData
 
     filterRiversWithYear(filterYear) {
 

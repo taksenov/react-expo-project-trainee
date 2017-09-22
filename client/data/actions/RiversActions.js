@@ -47,6 +47,7 @@ const RiverActions = {
             );
     },      //setFilterRivers
 
+    // TODO: похоже на анти-паттерн, отрефакторить и использовать разворот аргументов ...args
     setFilterRiversWithYear(year) {
         AppDispatcher.dispatch({
             type: RiversActionTypes.LOAD_RIVERS_REQUEST
@@ -66,6 +67,26 @@ const RiverActions = {
                 })
             );
     },      //setFilterRiversWithYear
+
+    getRiverData(year,riverType) {
+        AppDispatcher.dispatch({
+            type: RiversActionTypes.LOAD_RIVERS_REQUEST
+        });
+
+        api.filterRiversWithYearRiver(year,riverType)
+            .then(({ data }) => {
+                AppDispatcher.dispatch({
+                    type: RiversActionTypes.LOAD_RIVERS_SUCCESS,
+                    rivers: data
+                });
+            })
+            .catch(err =>
+                AppDispatcher.dispatch({
+                    type: RiversActionTypes.LOAD_RIVERS_FAIL,
+                    error: err
+                })
+            );
+    },      //getRiverData
 
     createRiver(river) {
         api.createRiver(river)

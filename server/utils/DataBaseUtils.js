@@ -90,6 +90,24 @@ export function filterRiversWithYearRiver(year, river) {
 
 } //filterRivers
 
+export function getRiverData(year, typeRiver) {
+    let yearLocal = year;
+    yearLocal=+yearLocal;
+    
+    return River.find({
+        scalingDate: {
+            '$gte': new Date(yearLocal, 1, 1),          //больше или равно чем Дата
+            '$lt': new Date(yearLocal+1, 1, 1)          //меньше чем Дата
+        },
+        typeRiver: {'$eq': typeRiver}                   //поиск с учетом типа реки
+    },
+    { 
+        name: 1,
+        levelToday: 1,
+        scalingDate: 1
+    }).sort({scalingDate:1});                      //сортировка в хронологическом порядке
+} //getRiverData
+
 export function createRiver(data) {
     const river = new River({
         name         : data.name,

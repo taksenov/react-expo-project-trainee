@@ -42,6 +42,10 @@ app.get('/filter-rivers-by-year-river', (req, res) => {
     db.filterRiversWithYearRiver(req.query.year,req.query.river).then( data => res.send(data) );
 });
 
+app.get('/get-river-data', (req, res) => {
+    db.getRiverData(req.query.year,req.query.typeRiver).then( data => res.send(data) );
+});
+
 app.get('/filter-rivers-by-year', (req, res) => {
     db.filterRiversWithYear(req.query.year).then( data => res.send(data) );
 });
