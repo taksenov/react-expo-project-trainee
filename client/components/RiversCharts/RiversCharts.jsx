@@ -4,6 +4,8 @@ import {Doughnut, Line} from 'react-chartjs-2';
 
 import AppConstants from '../../data/constants/AppConstants';
 
+console.log('AppConstants.CHARTS_LABELS', AppConstants.CHARTS_LABELS.length);
+
 const data = {
     labels: AppConstants.CHARTS_LABELS,
     datasets: [
