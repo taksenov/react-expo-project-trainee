@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Select from 'react-select';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
 
 import MessageForForm from '../MessageForForm/MessageForForm.jsx';
 
 import './RiverFilter.style.less';
 import 'react-select/dist/react-select.css';
-import 'react-datepicker/dist/react-datepicker.css';
 
 let optionsYears = [
     { value: '2007',   label: '2007'},
