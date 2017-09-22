@@ -29,12 +29,13 @@ class RiversCharts extends React.Component {
 
     componentWillMount() {
 
-        // const makeRequest = async () => {
-        //     await RiversActions.getRiverData(2017, 'river_01');
-        //     return console.log('данные по Оби за 2017 год', this.state)
-        // }
+        // TODO: Ознакомься и поправь как нужно https://stackoverflow.com/questions/33527653/babel-6-regeneratorruntime-is-not-defined       
+        const makeRequest = async () => {
+            await RiversActions.getRiverData(2017, 'river_01');
+            return console.log('данные по Оби за 2017 год', this.state)
+        }
         
-        // makeRequest();
+        makeRequest();
         //     await RiversActions.getRiverData(2017, 'river_01');
         //     console.log('данные по Оби за 2017 год', this.state);
         // // }
