@@ -24,7 +24,9 @@ const AppConstants = {
         pashtory: 'кр. уровень Пашторы',
         tugiyany: 'кр. уровень Тугияны',
     },
-
+    CHARTS_SCALING_RANGE_START: '-04-01T08:00:00.000Z',
+    CHARTS_SCALING_RANGE_END: '-11-30T08:00:00.000Z',
+    ONE_DAY_MS: 86400000,
 };
 
 export default AppConstants;

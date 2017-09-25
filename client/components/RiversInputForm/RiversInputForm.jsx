@@ -21,6 +21,10 @@ class RiversInputForm extends React.Component {
         RiversActions.loadRivers();
     }
 
+    componentDidMount() {
+        return console.log('componentDidMount RiversStore данные по Оби за 2017 год', RiversStore.getState())
+    } // componentDidMount
+
     handleRiverDelete(river) {
         RiversActions.deleteRiver(river.id);
     }

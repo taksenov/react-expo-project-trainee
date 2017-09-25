@@ -102,7 +102,8 @@ export function getRiverData(year, typeRiver) {
         typeRiver: {'$eq': typeRiver}                   //поиск с учетом типа реки
     },
     { 
-        name: 1,
+        _id: 0,
+        // name: 0,
         levelToday: 1,
         scalingDate: 1
     }).sort({scalingDate:1});                      //сортировка в хронологическом порядке

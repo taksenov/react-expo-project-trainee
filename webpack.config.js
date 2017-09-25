@@ -2,7 +2,7 @@ var webpack = require('webpack');
 // var path = require('path');    // IDEA: Use for Windows
 
 module.exports = {
-    entry: './client/main.js',
+    entry: ['babel-polyfill', './client/main.js'],
     output: {
         path: __dirname + '/public/build/js/',   // IDEA: Use for linux
         // path: path.resolve(__dirname, '/public/build/js/'),   // IDEA: Use for Windows

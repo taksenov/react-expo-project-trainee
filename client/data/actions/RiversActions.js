@@ -73,7 +73,7 @@ const RiverActions = {
             type: RiversActionTypes.LOAD_RIVERS_REQUEST
         });
 
-        api.filterRiversWithYearRiver(year,riverType)
+        api.getRiverData(year,riverType)
             .then(({ data }) => {
                 AppDispatcher.dispatch({
                     type: RiversActionTypes.LOAD_RIVERS_SUCCESS,
