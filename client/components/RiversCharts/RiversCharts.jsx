@@ -31,6 +31,10 @@ class RiversCharts extends React.Component {
                 labels: '',
                 datasets: ''
             },
+            data2017Year: {
+                labels: '',
+                datasets: ''
+            },
 
         };
     } //constructor
@@ -65,6 +69,8 @@ class RiversCharts extends React.Component {
 
         let date = new Date();
         let year = date.getFullYear();
+        let lastYear = year-1;
+        let lastTwoYear = year-2;
 
         // IDEA: Получить данные для графика Ретроспектива по реке Обь за последние три года
         api.getRiverData(year,'river_01')
@@ -95,68 +101,208 @@ class RiversCharts extends React.Component {
                     }
                 );
             })
-            .then(()=>{
-                this.setState(
-                    {
-                        dataRetroObLast3Years: {
-                            labels: AppConstants.CHARTS_LABELS,
-                            datasets: [
-                                this.state.dataRiverNowYear,
-                                {
-                                    label: 'кр. уровень Тугияны',
-                                    fill: false,
-                                    lineTension: 0.1,
-                                    backgroundColor: 'rgba(255, 10, 10, 1)',
-                                    borderColor: 'rgba(255, 10, 10, 1)',
-                                    borderCapStyle: 'butt',
-                                    borderDash: [],
-                                    borderDashOffset: 0.0,
-                                    borderJoinStyle: 'miter',
-                                    pointBorderColor: 'rgba(255, 10, 10, 1)',
-                                    pointBackgroundColor: '#fff',
-                                    pointBorderWidth: 1,
-                                    pointHoverRadius: 5,
-                                    pointHoverBackgroundColor: 'rgba(255, 10, 10, 1)',
-                                    pointHoverBorderColor: 'rgba(255, 10, 10, 1)',
-                                    pointHoverBorderWidth: 2,
-                                    pointRadius: 1,
-                                    pointHitRadius: 10,
-                                    data: AppConstants.CHARTS_CRITICAL_LEVEL_TUGIYANY_LINE
-                                },  
-                                {
-                                    label: 'кр. уровень Пашторы',
-                                    fill: false,
-                                    lineTension: 0.1,
-                                    backgroundColor: 'rgba(255, 75, 10, 1)',
-                                    borderColor: 'rgba(255, 75, 10, 1)',
-                                    borderCapStyle: 'butt',
-                                    borderDash: [],
-                                    borderDashOffset: 0.0,
-                                    borderJoinStyle: 'miter',
-                                    pointBorderColor: 'rgba(255, 75, 10, 1)',
-                                    pointBackgroundColor: '#fff',
-                                    pointBorderWidth: 1,
-                                    pointHoverRadius: 5,
-                                    pointHoverBackgroundColor: 'rgba(255, 75, 10, 1)',
-                                    pointHoverBorderColor: 'rgba(255, 75, 10, 1)',
-                                    pointHoverBorderWidth: 2,
-                                    pointRadius: 1,
-                                    pointHitRadius: 10,
-                                    data: AppConstants.CHARTS_CRITICAL_LEVEL_PASHTORY_LINE
-                                },  
-                            ]   
-                        }    
-                    }
-                );
-            })            
-            .catch(err => console.error('Error when recieve ChartRiverData', err))
+            .catch(err => console.error('Error when recieve ChartRiverData', err));
 
+        // api.getRiverData(lastYear,'river_01')
+        //     .then(({ data }) => {
+        //         this.setState(
+        //             {
+        //                 dataRiverLastYear: {
+        //                     label: `р. Обь - ${lastYear} год`,
+        //                     fill: false,
+        //                     lineTension: 0.1,
+        //                     backgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+        //                     borderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+        //                     borderCapStyle: 'butt',
+        //                     borderDash: [],
+        //                     borderDashOffset: 0.0,
+        //                     borderJoinStyle: 'miter',
+        //                     pointBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+        //                     pointBackgroundColor: '#fff',
+        //                     pointBorderWidth: 1,
+        //                     pointHoverRadius: 5,
+        //                     pointHoverBackgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+        //                     pointHoverBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+        //                     pointHoverBorderWidth: 2,
+        //                     pointRadius: 1,
+        //                     pointHitRadius: 10,
+        //                     data: this.handlePreparationForChart(data)
+        //                 }    
+        //             }
+        //         );
+        //     })
+        //     .catch(err => console.error('Error when recieve ChartRiverData', err));
+            
+        // api.getRiverData(lastTwoYear,'river_01')
+        //     .then(({ data }) => {
+        //         this.setState(
+        //             {
+        //                 dataRiverLastTwoYear: {
+        //                     label: `р. Обь - ${lastTwoYear} год`,
+        //                     fill: false,
+        //                     lineTension: 0.1,
+        //                     backgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.thirdGrade,
+        //                     borderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.thirdGrade,
+        //                     borderCapStyle: 'butt',
+        //                     borderDash: [],
+        //                     borderDashOffset: 0.0,
+        //                     borderJoinStyle: 'miter',
+        //                     pointBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.thirdGrade,
+        //                     pointBackgroundColor: '#fff',
+        //                     pointBorderWidth: 1,
+        //                     pointHoverRadius: 5,
+        //                     pointHoverBackgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.thirdGrade,
+        //                     pointHoverBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.thirdGrade,
+        //                     pointHoverBorderWidth: 2,
+        //                     pointRadius: 1,
+        //                     pointHitRadius: 10,
+        //                     data: this.handlePreparationForChart(data)
+        //                 }    
+        //             }
+        //         );
+        //     })
+        //     .catch(err => console.error('Error when recieve ChartRiverData', err));
+
+        // api.getRiverData(2007,'river_01')
+        //     .then(({ data }) => {
+        //         this.setState(
+        //             {
+        //                 dataRiverLast2007Year: {
+        //                     label: `р. Обь - ${2007} год`,
+        //                     fill: false,
+        //                     lineTension: 0.1,
+        //                     backgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.sampleGrade,
+        //                     borderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.sampleGrade,
+        //                     borderCapStyle: 'butt',
+        //                     borderDash: [],
+        //                     borderDashOffset: 0.0,
+        //                     borderJoinStyle: 'miter',
+        //                     pointBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.sampleGrade,
+        //                     pointBackgroundColor: '#fff',
+        //                     pointBorderWidth: 1,
+        //                     pointHoverRadius: 5,
+        //                     pointHoverBackgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.sampleGrade,
+        //                     pointHoverBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.sampleGrade,
+        //                     pointHoverBorderWidth: 2,
+        //                     pointRadius: 1,
+        //                     pointHitRadius: 10,
+        //                     data: this.handlePreparationForChart(data)
+        //                 }    
+        //             }
+        //         );
+        //     })
+        //     .catch(err => console.error('Error when recieve ChartRiverData', err));
+
+        // IDEA: Получить данные для графика Ретроспектива по реке Обь за последние три года
 
 
     } // componentWillMount
     
     componentDidMount() {
-
+        this.setState(
+            {
+                dataRetroObLast3Years: {
+                    labels: AppConstants.CHARTS_LABELS,
+                    datasets: [
+                        this.state.dataRiverNowYear,
+                        this.state.dataRiverLastYear,
+                        this.state.dataRiverLastTwoYear,
+                        this.state.dataRiverLast2007Year,
+                        {
+                            label: 'кр. уровень Тугияны',
+                            fill: false,
+                            lineTension: 0.1,
+                            backgroundColor: 'rgba(255, 10, 10, 1)',
+                            borderColor: 'rgba(255, 10, 10, 1)',
+                            borderCapStyle: 'butt',
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            borderJoinStyle: 'miter',
+                            pointBorderColor: 'rgba(255, 10, 10, 1)',
+                            pointBackgroundColor: '#fff',
+                            pointBorderWidth: 1,
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: 'rgba(255, 10, 10, 1)',
+                            pointHoverBorderColor: 'rgba(255, 10, 10, 1)',
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 1,
+                            pointHitRadius: 10,
+                            data: AppConstants.CHARTS_CRITICAL_LEVEL_TUGIYANY_LINE
+                        },  
+                        {
+                            label: 'кр. уровень Пашторы',
+                            fill: false,
+                            lineTension: 0.1,
+                            backgroundColor: 'rgba(255, 75, 10, 1)',
+                            borderColor: 'rgba(255, 75, 10, 1)',
+                            borderCapStyle: 'butt',
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            borderJoinStyle: 'miter',
+                            pointBorderColor: 'rgba(255, 75, 10, 1)',
+                            pointBackgroundColor: '#fff',
+                            pointBorderWidth: 1,
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: 'rgba(255, 75, 10, 1)',
+                            pointHoverBorderColor: 'rgba(255, 75, 10, 1)',
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 1,
+                            pointHitRadius: 10,
+                            data: AppConstants.CHARTS_CRITICAL_LEVEL_PASHTORY_LINE
+                        },  
+                    ]   
+                },
+                // data2017Year: {
+                //     labels: AppConstants.CHARTS_LABELS,
+                //     datasets: [
+                //         this.state.dataRiverNowYear,
+                //         this.state.dataRiverLast2007Year,
+                //         {
+                //             label: 'кр. уровень Тугияны',
+                //             fill: false,
+                //             lineTension: 0.1,
+                //             backgroundColor: 'rgba(255, 10, 10, 1)',
+                //             borderColor: 'rgba(255, 10, 10, 1)',
+                //             borderCapStyle: 'butt',
+                //             borderDash: [],
+                //             borderDashOffset: 0.0,
+                //             borderJoinStyle: 'miter',
+                //             pointBorderColor: 'rgba(255, 10, 10, 1)',
+                //             pointBackgroundColor: '#fff',
+                //             pointBorderWidth: 1,
+                //             pointHoverRadius: 5,
+                //             pointHoverBackgroundColor: 'rgba(255, 10, 10, 1)',
+                //             pointHoverBorderColor: 'rgba(255, 10, 10, 1)',
+                //             pointHoverBorderWidth: 2,
+                //             pointRadius: 1,
+                //             pointHitRadius: 10,
+                //             data: AppConstants.CHARTS_CRITICAL_LEVEL_TUGIYANY_LINE
+                //         },  
+                //         {
+                //             label: 'кр. уровень Пашторы',
+                //             fill: false,
+                //             lineTension: 0.1,
+                //             backgroundColor: 'rgba(255, 75, 10, 1)',
+                //             borderColor: 'rgba(255, 75, 10, 1)',
+                //             borderCapStyle: 'butt',
+                //             borderDash: [],
+                //             borderDashOffset: 0.0,
+                //             borderJoinStyle: 'miter',
+                //             pointBorderColor: 'rgba(255, 75, 10, 1)',
+                //             pointBackgroundColor: '#fff',
+                //             pointBorderWidth: 1,
+                //             pointHoverRadius: 5,
+                //             pointHoverBackgroundColor: 'rgba(255, 75, 10, 1)',
+                //             pointHoverBorderColor: 'rgba(255, 75, 10, 1)',
+                //             pointHoverBorderWidth: 2,
+                //             pointRadius: 1,
+                //             pointHitRadius: 10,
+                //             data: AppConstants.CHARTS_CRITICAL_LEVEL_PASHTORY_LINE
+                //         },  
+                //     ]   
+                // },                    
+            }
+        );
     } // componentDidMount
 
     render() {
@@ -165,7 +311,7 @@ class RiversCharts extends React.Component {
 
                 <div>
                     <span>
-                        <strong>Графики</strong>
+                        <h3>График: р.Обь ретроспектива за последние 3 года плюс 2007 год</h3>
                     </span>
                 </div>
 
@@ -174,6 +320,8 @@ class RiversCharts extends React.Component {
                         <Line data={this.state.dataRetroObLast3Years} />
                     </div>
                 </div>
+
+ 
 
             </div>
         );
