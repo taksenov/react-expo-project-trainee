@@ -102,7 +102,7 @@ class RiversCharts extends React.Component {
         super(props);
         this.state = {
             data: '',
-            dataRetroObLast3Years: {},
+            dataLastThreeYearsObRiver: {},
             dataNowYearAllRivers: {}
         };
     } //constructor
@@ -221,7 +221,7 @@ class RiversCharts extends React.Component {
                 );
                 _this.setState(
                     {
-                        dataRetroObLast3Years: {...changeState}
+                        dataLastThreeYearsObRiver: {...changeState}
                     }
                 );
 
@@ -340,7 +340,7 @@ class RiversCharts extends React.Component {
 
                 <div className='row'>
                     <div className='col-lg-12'>
-                        <Line data={this.state.dataRetroObLast3Years} />
+                        <Line data={this.state.dataLastThreeYearsObRiver} />
                     </div>
                 </div>
 
