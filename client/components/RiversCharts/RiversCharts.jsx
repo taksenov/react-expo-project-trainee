@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Line} from 'react-chartjs-2';
+import numbers from 'numbers';
 
 import AppConstants from '../../data/constants/AppConstants';
 
@@ -10,7 +11,7 @@ const initialState = {
     labels: AppConstants.CHARTS_LABELS,
     datasets: [
         {
-            ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,            
+            ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
             label: 'кр. уровень Тугияны',
             backgroundColor: 'rgba(255, 10, 10, 1)',
             borderColor: 'rgba(255, 10, 10, 1)',
@@ -20,7 +21,7 @@ const initialState = {
             data: AppConstants.CHARTS_CRITICAL_LEVEL_TUGIYANY_LINE
         },
         {
-            ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,            
+            ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
             label: 'кр. уровень Пашторы',
             backgroundColor: 'rgba(255, 75, 10, 1)',
             borderColor: 'rgba(255, 75, 10, 1)',
@@ -178,11 +179,11 @@ class RiversCharts extends React.Component {
                     {
                         ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
                         label: `р. Обь - ${year} год`,
-                        backgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
-                        borderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
-                        pointBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
-                        pointHoverBackgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
-                        pointHoverBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                        backgroundColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
+                        borderColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
+                        pointBorderColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
+                        pointHoverBackgroundColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
+                        pointHoverBorderColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
                         data: riverDataNow
                     },
                 );
@@ -191,11 +192,11 @@ class RiversCharts extends React.Component {
                     {
                         ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
                         label: `р. Казым - ${year} год`,
-                        backgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
-                        borderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
-                        pointBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
-                        pointHoverBackgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
-                        pointHoverBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                        backgroundColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
+                        borderColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
+                        pointBorderColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
+                        pointHoverBackgroundColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
+                        pointHoverBorderColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
                         data: riverDataLast
                     },
                 );
@@ -204,11 +205,11 @@ class RiversCharts extends React.Component {
                     {
                         ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
                         label: `р. Амня - ${year} год`,
-                        backgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.thirdGrade,
-                        borderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.thirdGrade,
-                        pointBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.thirdGrade,
-                        pointHoverBackgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.thirdGrade,
-                        pointHoverBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.thirdGrade,
+                        backgroundColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
+                        borderColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
+                        pointBorderColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
+                        pointHoverBackgroundColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
+                        pointHoverBorderColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
                         data: riverDataLastTwo
                     },
                 );
@@ -225,6 +226,48 @@ class RiversCharts extends React.Component {
 
         })();
         // IDEA: Получить данные для графика Реки ,елоярского района за текущий год
+
+        // IDEA: Тест линейной регрессии
+        let arrX = [0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14 ];
+        let arrY = [
+            714,699,686,671,657,640,631,619,606,595,584,572,567,556,546
+        ];
+        let linRes = numbers.statistic.linearRegression(arrX, arrY)(arrX);
+
+        console.log('mean =', numbers.statistic.mean(linRes));
+        console.log('median =', numbers.statistic.median(linRes));
+        console.log('rSquared =', numbers.statistic.rSquared(arrY, linRes));
+
+        this.setState(
+            {
+                dataLinearRegression: {
+                    labels: arrX,
+                    datasets: [
+                        {
+                            ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
+                            label: `Измеренные значения`,
+                            backgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                            borderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                            pointBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                            pointHoverBackgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                            pointHoverBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                            data: arrY
+                        },
+                        {
+                            ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
+                            label: `Линия тренда`,
+                            backgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                            borderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                            pointBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                            pointHoverBackgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                            pointHoverBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                            data: linRes
+                        },
+                    ]
+                }
+            }
+        );
+        // IDEA: Тест линейной регрессии
 
     } // componentWillMount
 
@@ -254,6 +297,18 @@ class RiversCharts extends React.Component {
                 <div className='row'>
                     <div className='col-lg-12'>
                         <Line data={this.state.dataNowYearAllRivers} />
+                    </div>
+                </div>
+
+                <div>
+                    <span>
+                        <h3>График: линия тренда</h3>
+                    </span>
+                </div>
+
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <Line data={this.state.dataLinearRegression} />
                     </div>
                 </div>
 

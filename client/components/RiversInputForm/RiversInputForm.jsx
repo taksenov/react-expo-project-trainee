@@ -9,12 +9,12 @@ import RiversGrid from '../RiversGrid/RiversGrid.jsx';
 
 class RiversInputForm extends React.Component {
 
-    static getStores() { 
-        return [RiversStore]; 
-    } 
+    static getStores() {
+        return [RiversStore];
+    }
 
-    static calculateState(prevState) { 
-        return RiversStore.getState(); 
+    static calculateState(prevState) {
+        return RiversStore.getState();
     }
 
     componentWillMount() {
@@ -46,7 +46,7 @@ class RiversInputForm extends React.Component {
                         <RiversGrid rivers={this.state.rivers} onRiverDelete={this.handleRiverDelete} />
                     </div>
                 </div>
-        
+
             </div>
         );
     }
