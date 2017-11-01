@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Line} from 'react-chartjs-2';
 import numbers from 'numbers';
 
+import MathAnalytics from '../MathAnalytics/MathAnalytics';
 import AppConstants from '../../data/constants/AppConstants';
 
 import api from '../../api';
@@ -237,6 +238,8 @@ class RiversCharts extends React.Component {
         console.log('mean =', numbers.statistic.mean(linRes));
         console.log('median =', numbers.statistic.median(linRes));
         console.log('rSquared =', numbers.statistic.rSquared(arrY, linRes));
+        let mathAnalytics = new MathAnalytics();
+        console.log('inclineCoeff =', mathAnalytics.linearRegressionInclineCoefficient(arrX, arrY));
 
         this.setState(
             {
