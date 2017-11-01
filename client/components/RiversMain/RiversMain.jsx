@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Link, NavLink} from 'react-router-dom';
 import RiversInputForm from '../RiversInputForm/RiversInputForm.jsx';
 import RiversArchive from '../RiversArchive/RiversArchive.jsx';
 import RiversCharts from '../RiversCharts/RiversCharts.jsx';
+import RiversReport from '../RiversReport/RiversReport.jsx';
 
 class RiversMain extends React.Component {
 
@@ -35,6 +36,7 @@ class RiversMain extends React.Component {
                             <TabsRiversMenuLink to='/riversForm' label='Форма ввода' />
                             <TabsRiversMenuLink to='/riversArchive' label='Архив' />
                             <TabsRiversMenuLink to='/riversCharts' label='Графики' />
+                            <TabsRiversMenuLink to='/riversReport' label='Отчет' />
                         </ul>
 
                         {/* Tabs Content */}
@@ -42,6 +44,7 @@ class RiversMain extends React.Component {
                             <Route exact path='/riversForm' component={RiversInputForm} />
                             <Route path='/riversArchive' component={RiversArchive} />
                             <Route path='/riversCharts' component={RiversCharts} />
+                            <Route path='/riversReport' component={RiversReport} />
                         </div>
                     
                     </div>

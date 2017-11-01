@@ -12,6 +12,9 @@ import './commonless/bootswatchTheme/main.less';
 //ANIMATE-CSS SUPPORT
 import './commonless/animateCSS/animate.min.css';
 
+//PRINT-CSS SUPPORT
+import './commonless/bootswatchTheme/printversion.less';
+
 // COMPONENTS
 import App from './components/App/App.jsx';
 

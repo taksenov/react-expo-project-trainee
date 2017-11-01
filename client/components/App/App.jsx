@@ -35,6 +35,7 @@ class App extends React.Component {
                             <Route path='/riversForm' component={RiversMain} />
                             <Route path='/riversArchive' component={RiversMain} />
                             <Route path='/riversCharts' component={RiversMain} />
+                            <Route path='/riversReport' component={RiversMain} />
                             <Route path='/fires' component={FiresMain} />
                         </Switch>
                     </div>
