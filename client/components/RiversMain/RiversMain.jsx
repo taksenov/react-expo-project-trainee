@@ -22,7 +22,7 @@ class RiversMain extends React.Component {
             <div className='EddsData__RiversMain'>
 
                 {/* Header */}
-                <div className='row'>
+                <div className='row edds__common--no-print'>
                     <div className='col-lg-12 text-center'>
                         <h2 className='App__header'> Реки </h2>
                     </div>

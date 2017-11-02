@@ -92,7 +92,12 @@ class RiversReport extends React.Component {
         this.state = {
             data: '',
             dataLastThreeYearsObRiver: {},
-            dataNowYearAllRivers: {}
+            dataNowYearAllRivers: {},
+            dateVisible  : moment(),
+            dateString  : '01-01-1900',
+            isError: false,
+            messageText: '',
+            messageClassName: ''
         };
     } //constructor
 
@@ -176,7 +181,16 @@ class RiversReport extends React.Component {
         console.log('inclineCoeff =', mathAnalytics.linearRegressionInclineCoefficient(arrX, arrY));
 
         this.setState(
-            {
+            {   
+                rSquared: {
+                    riverType01: (Math.round(numbers.statistic.rSquared(arrY, linRes) * 100) / 100)*100
+                },
+                inclineCoeff: {
+                    riverType01: Math.round(mathAnalytics.linearRegressionInclineCoefficient(arrX, arrY) * 100) / 100
+                },
+                // inclineCoeffRiverType01: (Math.round(numbers.statistic.rSquared(arrY, linRes) * 100) / 100)*100,
+                dateVisible  : moment(),
+                dateString  : moment().format('YYYY[-]MM[-]DD'),
                 dataLinearRegression: {
                     labels: arrX,
                     datasets: [
@@ -214,18 +228,18 @@ class RiversReport extends React.Component {
                 dateVisible: value,
                 dateString: value.format('YYYY[-]MM[-]DD')
             },
-            () => console.log('дата изменена', this.state.dateVisible)
+            () => console.log('дата изменена', this.state.dateString)
         );
     } //handleDateChange    
 
     render() {
         return (
             <div className='EddsData__RiversReport'>
-                <div className='RiversReport'>
+                <div className='RiversReport edds__common--no-print'>
                     <div className='well bs-component'>
                         <form className='form-horizontal RiversReport__form'>
                             <fieldset>
-                                <legend>Подготовлен отчет за DD-MM-YYYY</legend>
+                                <legend>Дата отчета:  {this.state.dateString}</legend>
 
                                 {/* Scaling date */}                                    
                                 <div className='form-group'>
@@ -262,13 +276,13 @@ class RiversReport extends React.Component {
                                 <div className='form-group'>
                                     <div className='col-lg-11 col-lg-offset-1'>
                                         <button 
-                                            className='btn btn-default Rivers__Editor_formButton'
+                                            className='btn btn-default Rivers__Report_formButton'
                                             onClick={(e) => this.handleFormClear(e)}
                                         >
                                             Отмена
                                         </button>
                                         <button
-                                            className='btn btn-primary Rivers__Editor_formButton'
+                                            className='btn btn-primary Rivers__Report_formButton'
                                             disabled={(this.state.name && this.state.levelToday)? false : true}
                                             onClick={(e) => this.handleRiverAdd(e)}
                                         >
@@ -285,25 +299,135 @@ class RiversReport extends React.Component {
 
                 <div>
                     <span>
-                        <h3>График: реки Белоярского района {this.state.nowYear} год</h3>
+                        <h3 className='text-center'>Отчет по уровням рек на {this.state.dateString}</h3>
                     </span>
+                </div>
+
+                <div className='Rivers__Report_paragrapf--mb30'>
+                    <h4>
+                        Паводковая обстановка:
+                    </h4>
+                    <p>
+                        Уровень реки Обь равен <strong>{AppConstants.CRITICAL_LEVEL_PASHTORY}</strong> см. 
+                    </p>
+                    <p>
+                        - для д. Пашторы: критический уровень равен <strong>{AppConstants.CRITICAL_LEVEL_PASHTORY}</strong> см., ПРЕВЫШЕН_ИЛИ_РАВЕН на 000 см;
+                    </p>
+                    <p>
+                        - для д. Тугияны: критический уровень равен <strong>{AppConstants.CRITICAL_LEVEL_TUGIYANY}</strong> см., НЕ_ПРЕВЫШЕН до критического уровня 000 см.
+                    </p>
+                </div>
+
+                <div>
+                    <h4>
+                        Гидрологическая обстановка:
+                    </h4>
+                    
+                    <p>
+                        За период с <strong>НАЧАЛО_ПЕРИОДА</strong> по <strong>ВЫБРАННАЯ_ДАТА</strong> отмечалось:
+                    </p>
+                    <table className='table table-striped table-hover '>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Река</th>
+                                <th>Уровень</th>
+                                <th>Среднее изменение уровня</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Обь</td>
+                                <td>УМЕНЬШАЛСЯ</td>
+                                <td>
+                                    {this.state.inclineCoeff.riverType01} см. в сутки
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Амня</td>
+                                <td>Column content</td>
+                                <td>Column content</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Казым</td>
+                                <td>Column content</td>
+                                <td>Column content</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <h5>
+                        <strong>
+                            Линия тренда НАЗВАНИЕ_РЕКИ
+                        </strong>
+                    </h5>
+                    <p>
+                        Показатель статистического соответствия = {this.state.rSquared.riverType01}%
+                        <br/>
+                        С _ОПРЕДЕЛННОЙ_ долей вероятности уровень продолжит УМЕНЬШАТЬСЯ, на {this.state.inclineCoeff.riverType01} см. в сутки
+                    </p>                    
+                </div>
+
+                <div className='row Rivers__Report_paragrapf--mb30'>
+                    <div className='col-lg-12'>
+                        <Line data={this.state.dataLinearRegression} />
+                    </div>
+                </div>
+
+                <div>
+                    <h5>
+                        <strong>
+                            Линия тренда НАЗВАНИЕ_РЕКИ
+                        </strong>
+                    </h5>
+                    <p>
+                        Показатель статистического соответствия = {this.state.rSquared.riverType01}%
+                        <br/>
+                        С _ОПРЕДЕЛННОЙ_ долей вероятности уровень продолжит УМЕНЬШАТЬСЯ, на {this.state.inclineCoeff.riverType01} см. в сутки
+                    </p>                                         
+                </div>
+
+                <div className='row Rivers__Report_paragrapf--mb30'>
+                    <div className='col-lg-12'>
+                        <Line data={this.state.dataLinearRegression} />
+                    </div>
+                </div>
+
+                <div>
+                    <h5>
+                        <strong>
+                            Линия тренда НАЗВАНИЕ_РЕКИ
+                        </strong>
+                    </h5>
+                    <p>
+                        Показатель статистического соответствия = {this.state.rSquared.riverType01}%
+                        <br/>
+                        С _ОПРЕДЕЛННОЙ_ долей вероятности уровень продолжит УМЕНЬШАТЬСЯ, на {this.state.inclineCoeff.riverType01} см. в сутки
+                    </p>                                         
+                </div>
+
+                <div className='row Rivers__Report_paragrapf--mb30'>
+                    <div className='col-lg-12'>
+                        <Line data={this.state.dataLinearRegression} />
+                    </div>
+                </div>
+
+                <div>
+                    <h5>
+                        <strong>
+                            График уровней рек в YYYY году
+                        </strong>
+                    </h5>
                 </div>
 
                 <div className='row'>
                     <div className='col-lg-12'>
                         <Line data={this.state.dataNowYearAllRivers} />
-                    </div>
-                </div>
-
-                <div>
-                    <span>
-                        <h3>График: линия тренда</h3>
-                    </span>
-                </div>
-
-                <div className='row'>
-                    <div className='col-lg-12'>
-                        <Line data={this.state.dataLinearRegression} />
                     </div>
                 </div>
 
