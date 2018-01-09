@@ -17,6 +17,7 @@ describe('<NavBar />', () => {
         // Find menuElements of NavBar
         expect(renderedComponent.find('Link .navbar-brand').children().node).toEqual('EDDS Data');
         expect(renderedComponent.find('Link .NavBar__Notes_link').children().node).toEqual('Notes');
+        expect(renderedComponent.find('Link .NavBar__Rivers_link').children().node).toEqual('Реки');
         expect(renderedComponent.find('Link .NavBar__Fires_link').children().node).toEqual('Fires');
 
     });

@@ -28,7 +28,7 @@ class NotesMain extends React.Component {
     handleNoteAdd(noteData) {
         NotesActions.createNote(noteData);
     }
-
+ 
     render() {
         return (
             <div className='EddsData__NotesMain'>

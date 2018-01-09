@@ -2,7 +2,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import NotesActionTypes from '../actiontypes/NotesActionTypes';
 
 import api from '../../api';
-
+ 
 const NoteActions = {
     loadNotes() {
         AppDispatcher.dispatch({

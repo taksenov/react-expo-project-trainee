@@ -6,7 +6,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 let _notes = [];
 let _loadingError = null;
 let _isLoading = true;
-
+ 
 function formatNote(note) {
     return {
         id: note._id,
@@ -24,35 +24,35 @@ class NotesStore extends ReduceStore {
 
     getInitialState() {
         //TODO: в будущем разобраться и использовать immutable //(return Immutable.OrderedMap();)
-        return { notes: [] };
+        return { notes: [] || null };
     }
 
     reduce(state, action) {
         switch(action.type) {
 
-            case NotesActionTypes.LOAD_NOTES_REQUEST: {
-                _isLoading = true;
+        case NotesActionTypes.LOAD_NOTES_REQUEST: {
+            _isLoading = true;
 
-                return state;
-            }
+            return state;
+        }
 
-            case NotesActionTypes.LOAD_NOTES_SUCCESS: {
-                _isLoading = false;
-                _notes = action.notes.map( formatNote );
-                _loadingError = null;
+        case NotesActionTypes.LOAD_NOTES_SUCCESS: {
+            _isLoading = false;
+            _notes = action.notes.map( formatNote );
+            _loadingError = null;
 
-                return state = { notes: _notes };
-            }
+            return state = { notes: _notes };
+        }
 
-            case NotesActionTypes.LOAD_NOTES_FAIL: {
-                _loadingError = action.error;
+        case NotesActionTypes.LOAD_NOTES_FAIL: {
+            _loadingError = action.error;
 
-                return state;
-            }
+            return state;
+        }
 
-            default: {
-                console.log('No such handler');
-            }
+        default: {
+            return state;
+        }
 
         }
     }
