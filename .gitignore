@@ -5,3 +5,4 @@ etc/config.mjs
 script
 coverage/
 temp/
+.vscode/
