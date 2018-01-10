@@ -2,9 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import {serverPort} from '../etc/config.json';
+import serverConfig from '../etc/config';
+const {serverPort} = serverConfig;
 
-import * as db from './utils/DataBaseUtils.js';
+import * as db from './utils/DataBaseUtils';
 
 db.setUpConnection();
  
