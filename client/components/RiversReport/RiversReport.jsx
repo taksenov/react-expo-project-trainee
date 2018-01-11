@@ -111,6 +111,7 @@ class RiversReport extends React.Component {
         };
 
         this.handleDateChange = this.handleDateChange.bind(this);
+        // TODO: добавить эти обработчики нажатий на кнопки, через props
         // this.handleFormClear = this.handleFormClear.bind(this);
         // this.handleRiverAdd = this.handleRiverAdd.bind(this);
     } //constructor
