@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Line} from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import numbers from 'numbers';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
@@ -39,22 +39,26 @@ const initialState = {
             pointHoverBackgroundColor: 'rgba(255, 75, 10, 1)',
             pointHoverBorderColor: 'rgba(255, 75, 10, 1)',
             data: AppConstants.CHARTS_CRITICAL_LEVEL_PASHTORY_LINE
-        },
+        }
     ]
 };
 
 class DataFromRiver {
-    
     handlePreparationForChart(chartData) {
-        if ( arguments.length === 0 ) return;
+        if (arguments.length === 0) return;
 
         let firstDate = chartData[0].scalingDate;
-        let lastDate = chartData[chartData.length-1].scalingDate;
-        let dataYear = firstDate.substr(0,4);
-        let scalingRangeStart = dataYear + AppConstants.CHARTS_SCALING_RANGE_START;
+        let lastDate = chartData[chartData.length - 1].scalingDate;
+        let dataYear = firstDate.substr(0, 4);
+        let scalingRangeStart =
+            dataYear + AppConstants.CHARTS_SCALING_RANGE_START;
         let scalingRangeEnd = dataYear + AppConstants.CHARTS_SCALING_RANGE_END;
-        let scalingDaysBefore = (Date.parse(firstDate)-Date.parse(scalingRangeStart)) / AppConstants.ONE_DAY_MS;
-        let scalingDaysAfter  = (Date.parse(scalingRangeEnd)-Date.parse(lastDate)) / AppConstants.ONE_DAY_MS;
+        let scalingDaysBefore =
+            (Date.parse(firstDate) - Date.parse(scalingRangeStart)) /
+            AppConstants.ONE_DAY_MS;
+        let scalingDaysAfter =
+            (Date.parse(scalingRangeEnd) - Date.parse(lastDate)) /
+            AppConstants.ONE_DAY_MS;
         let levelBefore = [];
         let levelRealScalling = [];
         let levelAfter = [];
@@ -65,44 +69,53 @@ class DataFromRiver {
         for (let i of chartData) {
             levelRealScalling.push(i.levelToday);
         }
-        workingLevelArrayForCharts = workingLevelArrayForCharts.concat(levelBefore,levelRealScalling,levelAfter);
+        workingLevelArrayForCharts = workingLevelArrayForCharts.concat(
+            levelBefore,
+            levelRealScalling,
+            levelAfter
+        );
 
         return workingLevelArrayForCharts;
     } //handlePreparationForChart
 
     async getRiverData(year, river) {
-        if ( arguments.length === 0 ) return;
+        if (arguments.length === 0) return;
 
         try {
-            let riverDataFromAPI = await api.getRiverData(year,river);
-            let riverDataForChart = await this.handlePreparationForChart(riverDataFromAPI.data);
+            let riverDataFromAPI = await api.getRiverData(year, river);
+            let riverDataForChart = await this.handlePreparationForChart(
+                riverDataFromAPI.data
+            );
 
             return riverDataForChart;
         } catch (error) {
-            throw new Error(`Не удалось получить данные по реке ${river} за ${year} год'`);
+            throw new Error(
+                `Не удалось получить данные по реке ${river} за ${year} год'`
+            );
         }
     } //getRiverData
-
 } //DataFromRiver
 
 class RiversReport extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
             data: '',
             dataLastThreeYearsObRiver: {},
             dataNowYearAllRivers: {},
-            dateVisible  : moment(),
-            dateString  : '01-01-1900',
+            dateVisible: moment(),
+            dateString: '01-01-1900',
             isError: false,
             messageText: '',
             messageClassName: ''
         };
+
+        this.handleDateChange = this.handleDateChange.bind(this);
+        // this.handleFormClear = this.handleFormClear.bind(this);
+        // this.handleRiverAdd = this.handleRiverAdd.bind(this);
     } //constructor
 
     componentWillMount() {
-
         let _this = this;
         let date = new Date();
         let year = date.getFullYear();
@@ -114,63 +127,82 @@ class RiversReport extends React.Component {
             changeState = JSON.parse(JSON.stringify(initialState));
 
             try {
-                let riverDataNow = await dataFromRiver.getRiverData(year,'river_01');       //Обь
-                changeState.datasets.push(
-                    {
-                        ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
-                        label: `р. Обь - ${year} год`,
-                        backgroundColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
-                        borderColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
-                        pointBorderColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
-                        pointHoverBackgroundColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
-                        pointHoverBorderColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
-                        data: riverDataNow
-                    },
-                );
-                let riverDataLast = await dataFromRiver.getRiverData(year,'river_02');      //Казым
-                changeState.datasets.push(
-                    {
-                        ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
-                        label: `р. Казым - ${year} год`,
-                        backgroundColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
-                        borderColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
-                        pointBorderColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
-                        pointHoverBackgroundColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
-                        pointHoverBorderColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
-                        data: riverDataLast
-                    },
-                );
-                let riverDataLastTwo = await dataFromRiver.getRiverData(year,'river_03');    //Амня
-                changeState.datasets.push(
-                    {
-                        ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
-                        label: `р. Амня - ${year} год`,
-                        backgroundColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
-                        borderColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
-                        pointBorderColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
-                        pointHoverBackgroundColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
-                        pointHoverBorderColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
-                        data: riverDataLastTwo
-                    },
-                );
-                _this.setState(
-                    {
-                        nowYear: year,
-                        dataNowYearAllRivers: {...changeState}
-                    }
-                );
-
+                let riverDataNow = await dataFromRiver.getRiverData(
+                    year,
+                    'river_01'
+                ); //Обь
+                changeState.datasets.push({
+                    ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
+                    label: `р. Обь - ${year} год`,
+                    backgroundColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
+                    borderColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
+                    pointBorderColor: AppConstants.CHARTS_STANDARD_COLORS.ob,
+                    pointHoverBackgroundColor:
+                        AppConstants.CHARTS_STANDARD_COLORS.ob,
+                    pointHoverBorderColor:
+                        AppConstants.CHARTS_STANDARD_COLORS.ob,
+                    data: riverDataNow
+                });
+                let riverDataLast = await dataFromRiver.getRiverData(
+                    year,
+                    'river_02'
+                ); //Казым
+                changeState.datasets.push({
+                    ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
+                    label: `р. Казым - ${year} год`,
+                    backgroundColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
+                    borderColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
+                    pointBorderColor: AppConstants.CHARTS_STANDARD_COLORS.kazym,
+                    pointHoverBackgroundColor:
+                        AppConstants.CHARTS_STANDARD_COLORS.kazym,
+                    pointHoverBorderColor:
+                        AppConstants.CHARTS_STANDARD_COLORS.kazym,
+                    data: riverDataLast
+                });
+                let riverDataLastTwo = await dataFromRiver.getRiverData(
+                    year,
+                    'river_03'
+                ); //Амня
+                changeState.datasets.push({
+                    ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
+                    label: `р. Амня - ${year} год`,
+                    backgroundColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
+                    borderColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
+                    pointBorderColor: AppConstants.CHARTS_STANDARD_COLORS.amnya,
+                    pointHoverBackgroundColor:
+                        AppConstants.CHARTS_STANDARD_COLORS.amnya,
+                    pointHoverBorderColor:
+                        AppConstants.CHARTS_STANDARD_COLORS.amnya,
+                    data: riverDataLastTwo
+                });
+                _this.setState({
+                    nowYear: year,
+                    dataNowYearAllRivers: { ...changeState }
+                });
             } catch (error) {
                 console.error(error);
             }
-
         })();
         // IDEA: Получить данные для графика Реки ,елоярского района за текущий год
 
         // IDEA: Тест линейной регрессии
-        let arrX = [0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14 ];
+        let arrX = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
         let arrY = [
-            714,699,686,671,657,640,631,619,606,595,584,572,567,556,546
+            714,
+            699,
+            686,
+            671,
+            657,
+            640,
+            631,
+            619,
+            606,
+            595,
+            584,
+            572,
+            567,
+            556,
+            546
         ];
         let linRes = numbers.statistic.linearRegression(arrX, arrY)(arrX);
 
@@ -178,48 +210,67 @@ class RiversReport extends React.Component {
         console.log('median =', numbers.statistic.median(linRes));
         console.log('rSquared =', numbers.statistic.rSquared(arrY, linRes));
         let mathAnalytics = new MathAnalytics();
-        console.log('inclineCoeff =', mathAnalytics.linearRegressionInclineCoefficient(arrX, arrY));
-
-        this.setState(
-            {   
-                rSquared: {
-                    riverType01: (Math.round(numbers.statistic.rSquared(arrY, linRes) * 100) / 100)*100
-                },
-                inclineCoeff: {
-                    riverType01: Math.round(mathAnalytics.linearRegressionInclineCoefficient(arrX, arrY) * 100) / 100
-                },
-                // inclineCoeffRiverType01: (Math.round(numbers.statistic.rSquared(arrY, linRes) * 100) / 100)*100,
-                dateVisible  : moment(),
-                dateString  : moment().format('YYYY[-]MM[-]DD'),
-                dataLinearRegression: {
-                    labels: arrX,
-                    datasets: [
-                        {
-                            ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
-                            label: `Измеренные значения`,
-                            backgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
-                            borderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
-                            pointBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
-                            pointHoverBackgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
-                            pointHoverBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
-                            data: arrY
-                        },
-                        {
-                            ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
-                            label: `Линия тренда`,
-                            backgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
-                            borderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
-                            pointBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
-                            pointHoverBackgroundColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
-                            pointHoverBorderColor: AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
-                            data: linRes
-                        },
-                    ]
-                }
-            }
+        console.log(
+            'inclineCoeff =',
+            mathAnalytics.linearRegressionInclineCoefficient(arrX, arrY)
         );
-        // IDEA: Тест линейной регрессии
 
+        this.setState({
+            rSquared: {
+                riverType01:
+                    Math.round(numbers.statistic.rSquared(arrY, linRes) * 100) /
+                    100 *
+                    100
+            },
+            inclineCoeff: {
+                riverType01:
+                    Math.round(
+                        mathAnalytics.linearRegressionInclineCoefficient(
+                            arrX,
+                            arrY
+                        ) * 100
+                    ) / 100
+            },
+            // inclineCoeffRiverType01: (Math.round(numbers.statistic.rSquared(arrY, linRes) * 100) / 100)*100,
+            dateVisible: moment(),
+            dateString: moment().format('YYYY[-]MM[-]DD'),
+            dataLinearRegression: {
+                labels: arrX,
+                datasets: [
+                    {
+                        ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
+                        label: `Измеренные значения`,
+                        backgroundColor:
+                            AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                        borderColor:
+                            AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                        pointBorderColor:
+                            AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                        pointHoverBackgroundColor:
+                            AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                        pointHoverBorderColor:
+                            AppConstants.CHARTS_OB_SUMMARY_COLORS.firstGrade,
+                        data: arrY
+                    },
+                    {
+                        ...AppConstants.CHARTS_DEFAULT_DATASET_FOR_LINE,
+                        label: `Линия тренда`,
+                        backgroundColor:
+                            AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                        borderColor:
+                            AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                        pointBorderColor:
+                            AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                        pointHoverBackgroundColor:
+                            AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                        pointHoverBorderColor:
+                            AppConstants.CHARTS_OB_SUMMARY_COLORS.secondGrade,
+                        data: linRes
+                    }
+                ]
+            }
+        });
+        // IDEA: Тест линейной регрессии
     } // componentWillMount
 
     handleDateChange(value) {
@@ -230,103 +281,118 @@ class RiversReport extends React.Component {
             },
             () => console.log('дата изменена', this.state.dateString)
         );
-    } //handleDateChange    
+    } //handleDateChange
 
     render() {
         return (
-            <div className='EddsData__RiversReport'>
-                <div className='RiversReport edds__common--no-print'>
-                    <div className='well bs-component'>
-                        <form className='form-horizontal RiversReport__form'>
+            <div className="EddsData__RiversReport">
+                <div className="RiversReport edds__common--no-print">
+                    <div className="well bs-component">
+                        <form className="form-horizontal RiversReport__form">
                             <fieldset>
-                                <legend>Дата отчета:  {this.state.dateString}</legend>
+                                <legend>
+                                    Дата отчета: {this.state.dateString}
+                                </legend>
 
-                                {/* Scaling date */}                                    
-                                <div className='form-group'>
-                                    <label htmlFor='inputDate' className='col-lg-1 control-label'>
+                                {/* Scaling date */}
+                                <div className="form-group">
+                                    <label
+                                        htmlFor="inputDate"
+                                        className="col-lg-1 control-label"
+                                    >
                                         Дата
                                     </label>
-                                    <div className='col-lg-11'>
-
+                                    <div className="col-lg-11">
                                         <DatePicker
-                                            className='form-control'
-                                            dateFormat='YYYY-MM-DD'
+                                            className="form-control"
+                                            dateFormat="YYYY-MM-DD"
                                             selected={this.state.dateVisible}
-                                            onChange={(value) => this.handleDateChange(value)}
-                                            ref='datePicker'
+                                            onChange={this.handleDateChange}
+                                            ref="datePicker"
                                         />
-                                        <span className='help-block'>
-                                            Если требуется другой отчет, выберите дату и нажмите кнопку "Сформировать" 
+                                        <span className="help-block">
+                                            Если требуется другой отчет,
+                                            выберите дату и нажмите кнопку
+                                            "Сформировать"
                                         </span>
                                     </div>
-
                                 </div>
-                                {/* Scaling date */}        
+                                {/* Scaling date */}
 
-                                
                                 {/* Message for Form */}
-                                <MessageForForm 
-                                    isError={this.state.isError} 
+                                <MessageForForm
+                                    isError={this.state.isError}
                                     messageText={this.state.messageText}
-                                    messageClassName={this.state.messageClassName}
+                                    messageClassName={
+                                        this.state.messageClassName
+                                    }
                                 />
                                 {/* Message for Form */}
 
-                                {/* Buttons group */}                            
-                                <div className='form-group'>
-                                    <div className='col-lg-11 col-lg-offset-1'>
-                                        <button 
-                                            className='btn btn-default Rivers__Report_formButton'
-                                            onClick={(e) => this.handleFormClear(e)}
+                                {/* Buttons group */}
+                                <div className="form-group">
+                                    <div className="col-lg-11 col-lg-offset-1">
+                                        <button
+                                            className="btn btn-default Rivers__Report_formButton"
+                                            onClick={this.handleFormClear}
                                         >
                                             Отмена
                                         </button>
                                         <button
-                                            className='btn btn-primary Rivers__Report_formButton'
-                                            disabled={(this.state.name && this.state.levelToday)? false : true}
-                                            onClick={(e) => this.handleRiverAdd(e)}
+                                            className="btn btn-primary Rivers__Report_formButton"
+                                            disabled={
+                                                this.state.name &&
+                                                this.state.levelToday
+                                                    ? false
+                                                    : true
+                                            }
+                                            onClick={this.handleRiverAdd}
                                         >
                                             Сформировать
                                         </button>
                                     </div>
                                 </div>
                                 {/* Buttons group */}
-
                             </fieldset>
                         </form>
-                    </div>                
-                </div>                
+                    </div>
+                </div>
 
                 <div>
                     <span>
-                        <h3 className='text-center'>Отчет по уровням рек на {this.state.dateString}</h3>
+                        <h3 className="text-center">
+                            Отчет по уровням рек на {this.state.dateString}
+                        </h3>
                     </span>
                 </div>
 
-                <div className='Rivers__Report_paragrapf--mb30'>
-                    <h4>
-                        Паводковая обстановка:
-                    </h4>
+                <div className="Rivers__Report_paragrapf--mb30">
+                    <h4>Паводковая обстановка:</h4>
                     <p>
-                        Уровень реки Обь равен <strong>{AppConstants.CRITICAL_LEVEL_PASHTORY}</strong> см. 
+                        Уровень реки Обь равен{' '}
+                        <strong>{AppConstants.CRITICAL_LEVEL_PASHTORY}</strong>{' '}
+                        см.
                     </p>
                     <p>
-                        - для д. Пашторы: критический уровень равен <strong>{AppConstants.CRITICAL_LEVEL_PASHTORY}</strong> см., ПРЕВЫШЕН_ИЛИ_РАВЕН на 000 см;
+                        - для д. Пашторы: критический уровень равен{' '}
+                        <strong>{AppConstants.CRITICAL_LEVEL_PASHTORY}</strong>{' '}
+                        см., ПРЕВЫШЕН_ИЛИ_РАВЕН на 000 см;
                     </p>
                     <p>
-                        - для д. Тугияны: критический уровень равен <strong>{AppConstants.CRITICAL_LEVEL_TUGIYANY}</strong> см., НЕ_ПРЕВЫШЕН до критического уровня 000 см.
+                        - для д. Тугияны: критический уровень равен{' '}
+                        <strong>{AppConstants.CRITICAL_LEVEL_TUGIYANY}</strong>{' '}
+                        см., НЕ_ПРЕВЫШЕН до критического уровня 000 см.
                     </p>
                 </div>
 
                 <div>
-                    <h4>
-                        Гидрологическая обстановка:
-                    </h4>
-                    
+                    <h4>Гидрологическая обстановка:</h4>
+
                     <p>
-                        За период с <strong>НАЧАЛО_ПЕРИОДА</strong> по <strong>ВЫБРАННАЯ_ДАТА</strong> отмечалось:
+                        За период с <strong>НАЧАЛО_ПЕРИОДА</strong> по{' '}
+                        <strong>ВЫБРАННАЯ_ДАТА</strong> отмечалось:
                     </p>
-                    <table className='table table-striped table-hover '>
+                    <table className="table table-striped table-hover ">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -341,7 +407,8 @@ class RiversReport extends React.Component {
                                 <td>Обь</td>
                                 <td>УМЕНЬШАЛСЯ</td>
                                 <td>
-                                    {this.state.inclineCoeff.riverType01} см. в сутки
+                                    {this.state.inclineCoeff.riverType01} см. в
+                                    сутки
                                 </td>
                             </tr>
                             <tr>
@@ -362,79 +429,84 @@ class RiversReport extends React.Component {
 
                 <div>
                     <h5>
-                        <strong>
-                            Линия тренда НАЗВАНИЕ_РЕКИ
-                        </strong>
+                        <strong>Линия тренда НАЗВАНИЕ_РЕКИ</strong>
                     </h5>
                     <p>
-                        Показатель статистического соответствия = {this.state.rSquared.riverType01}%
-                        <br/>
-                        С _ОПРЕДЕЛННОЙ_ долей вероятности уровень продолжит УМЕНЬШАТЬСЯ, на {this.state.inclineCoeff.riverType01} см. в сутки
-                    </p>                    
+                        Показатель статистического соответствия ={' '}
+                        {this.state.rSquared.riverType01}%
+                        <br />
+                        С _ОПРЕДЕЛННОЙ_ долей вероятности уровень продолжит
+                        УМЕНЬШАТЬСЯ, на {
+                            this.state.inclineCoeff.riverType01
+                        }{' '}
+                        см. в сутки
+                    </p>
                 </div>
 
-                <div className='row Rivers__Report_paragrapf--mb30'>
-                    <div className='col-lg-12'>
+                <div className="row Rivers__Report_paragrapf--mb30">
+                    <div className="col-lg-12">
                         <Line data={this.state.dataLinearRegression} />
                     </div>
                 </div>
 
                 <div>
                     <h5>
-                        <strong>
-                            Линия тренда НАЗВАНИЕ_РЕКИ
-                        </strong>
+                        <strong>Линия тренда НАЗВАНИЕ_РЕКИ</strong>
                     </h5>
                     <p>
-                        Показатель статистического соответствия = {this.state.rSquared.riverType01}%
-                        <br/>
-                        С _ОПРЕДЕЛННОЙ_ долей вероятности уровень продолжит УМЕНЬШАТЬСЯ, на {this.state.inclineCoeff.riverType01} см. в сутки
-                    </p>                                         
+                        Показатель статистического соответствия ={' '}
+                        {this.state.rSquared.riverType01}%
+                        <br />
+                        С _ОПРЕДЕЛННОЙ_ долей вероятности уровень продолжит
+                        УМЕНЬШАТЬСЯ, на {
+                            this.state.inclineCoeff.riverType01
+                        }{' '}
+                        см. в сутки
+                    </p>
                 </div>
 
-                <div className='row Rivers__Report_paragrapf--mb30'>
-                    <div className='col-lg-12'>
+                <div className="row Rivers__Report_paragrapf--mb30">
+                    <div className="col-lg-12">
                         <Line data={this.state.dataLinearRegression} />
                     </div>
                 </div>
 
                 <div>
                     <h5>
-                        <strong>
-                            Линия тренда НАЗВАНИЕ_РЕКИ
-                        </strong>
+                        <strong>Линия тренда НАЗВАНИЕ_РЕКИ</strong>
                     </h5>
                     <p>
-                        Показатель статистического соответствия = {this.state.rSquared.riverType01}%
-                        <br/>
-                        С _ОПРЕДЕЛННОЙ_ долей вероятности уровень продолжит УМЕНЬШАТЬСЯ, на {this.state.inclineCoeff.riverType01} см. в сутки
-                    </p>                                         
+                        Показатель статистического соответствия ={' '}
+                        {this.state.rSquared.riverType01}%
+                        <br />
+                        С _ОПРЕДЕЛННОЙ_ долей вероятности уровень продолжит
+                        УМЕНЬШАТЬСЯ, на {
+                            this.state.inclineCoeff.riverType01
+                        }{' '}
+                        см. в сутки
+                    </p>
                 </div>
 
-                <div className='row Rivers__Report_paragrapf--mb30'>
-                    <div className='col-lg-12'>
+                <div className="row Rivers__Report_paragrapf--mb30">
+                    <div className="col-lg-12">
                         <Line data={this.state.dataLinearRegression} />
                     </div>
                 </div>
 
                 <div>
                     <h5>
-                        <strong>
-                            График уровней рек в YYYY году
-                        </strong>
+                        <strong>График уровней рек в YYYY году</strong>
                     </h5>
                 </div>
 
-                <div className='row'>
-                    <div className='col-lg-12'>
+                <div className="row">
+                    <div className="col-lg-12">
                         <Line data={this.state.dataNowYearAllRivers} />
                     </div>
                 </div>
-
             </div>
         );
     }
-
 } //RiversReport
 
 export default RiversReport;
