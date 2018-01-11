@@ -1,8 +1,4 @@
 {
-    "presets": [
-        "env",
-        "react",
-        "stage-0"
-    ],
-    "plugins": ["transform-async-to-generator"]
+    "presets": ["env", "react", "stage-0"],
+    "plugins": ["transform-async-to-generator", "react-hot-loader/babel"]
 }

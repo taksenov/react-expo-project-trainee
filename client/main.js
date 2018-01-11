@@ -20,6 +20,7 @@ import App from './components/App/App.jsx';
 
 const appHistory = createBrowserHistory();
 
+// RENDER
 ReactDOM.render(
     <Router history={appHistory}>
         <App />

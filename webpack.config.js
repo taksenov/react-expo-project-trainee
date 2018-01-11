@@ -2,9 +2,9 @@ var webpack = require('webpack');
 // var path = require('path');    // IDEA: Use for Windows
 
 module.exports = {
-    entry: ['babel-polyfill', './client/main.js'],
+    entry: ['babel-polyfill', 'react-hot-loader/patch', './client/main.js'],
     output: {
-        path: __dirname + '/public/build/js/',   // IDEA: Use for linux
+        path: __dirname + '/public/build/js/', // IDEA: Use for linux
         // path: path.resolve(__dirname, '/public/build/js/'),   // IDEA: Use for Windows
         publicPath: 'build/js/',
         filename: 'bundle.js'
@@ -18,16 +18,17 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: 'style-loader!css-loader!autoprefixer-loader',
+                loader: 'style-loader!css-loader!autoprefixer-loader'
                 // exclude: [/node_modules/, /public/]
             },
             {
                 test: /\.less$/,
                 // loader: "style-loader!css-loader!autoprefixer-loader!less",
-                loader: 'style-loader!css-loader!autoprefixer-loader!less-loader',
+                loader:
+                    'style-loader!css-loader!autoprefixer-loader!less-loader',
                 exclude: [/node_modules/, /public/]
             },
-            
+
             // Fonts loaders ======================================
             {
                 test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -40,7 +41,7 @@ module.exports = {
                 use: 'file-loader'
             },
             // Fonts loaders ======================================
-            
+
             {
                 test: /\.gif$/,
                 loader: 'url-loader?limit=10000&mimetype=image/gif'
@@ -59,28 +60,34 @@ module.exports = {
             },
             {
                 test: /\.jsx$/,
-                loader: 'react-hot-loader!babel-loader',
+                // loader: 'react-hot-loader!babel-loader',
+                loader: 'react-hot-loader/webpack!babel-loader',
                 exclude: [/node_modules/, /public/]
             },
             {
                 test: /\.json$/,
                 loader: 'json-loader'
             },
-            { 
-                test: /bootstrap.+\.(jsx|js)$/, 
-                loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window' 
+            {
+                test: /bootstrap.+\.(jsx|js)$/,
+                loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
             }
         ]
     },
     devServer: {
         historyApiFallback: true,
-    },
+        hot: true
+    }
+    // plugins: [
+    //     new webpack.NamedModulesPlugin(),
+    //     new webpack.HotModuleReplacementPlugin()
+    // ]
     // IDEA: If need jQuery for others stuff use this instead bootstrap loader
     // plugins:[
-    //     new webpack.ProvidePlugin({   
+    //     new webpack.ProvidePlugin({
     //         jQuery: 'jquery',
     //         $: 'jquery',
     //         jquery: 'jquery'
     //     })
     // ]
-}
+};
