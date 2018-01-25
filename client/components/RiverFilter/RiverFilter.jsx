@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Select from 'react-select';
 
-import MessageForForm from '../MessageForForm/MessageForForm.jsx';
+import MessageForForm from '../MessageForForm';
 
 import './RiverFilter.style.less';
 import 'react-select/dist/react-select.css';

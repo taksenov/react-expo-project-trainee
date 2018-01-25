@@ -4,7 +4,7 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
-import MessageForForm from '../MessageForForm/MessageForForm.jsx';
+import MessageForForm from '../MessageForForm';
 
 import './RiverEditor.style.less';
 import 'react-select/dist/react-select.css';

@@ -1,14 +1,13 @@
 import React from 'react';
-import {Container} from 'flux/utils';
+import { Container } from 'flux/utils';
 
 import RiversStore from '../../data/stores/RiversStore';
 import RiversActions from '../../data/actions/RiversActions';
 
-import RiverEditor from '../RiverEditor/RiverEditor.jsx';
-import RiversGrid from '../RiversGrid/RiversGrid.jsx';
+import RiverEditor from '../RiverEditor';
+import RiversGrid from '../RiversGrid';
 
 class RiversInputForm extends React.Component {
-
     static getStores() {
         return [RiversStore];
     }
@@ -31,26 +30,26 @@ class RiversInputForm extends React.Component {
 
     render() {
         return (
-            <div className='EddsData__RiversMain'>
-
+            <div className="EddsData__RiversMain">
                 {/* RiverEditor */}
-                <div className='row'>
-                    <div className='col-lg-12'>
+                <div className="row">
+                    <div className="col-lg-12">
                         <RiverEditor onRiverAdd={this.handleRiverAdd} />
                     </div>
                 </div>
 
                 {/* RiversGrid */}
-                <div className='row'>
-                    <div className='col-lg-12'>
-                        <RiversGrid rivers={this.state.rivers} onRiverDelete={this.handleRiverDelete} />
+                <div className="row">
+                    <div className="col-lg-12">
+                        <RiversGrid
+                            rivers={this.state.rivers}
+                            onRiverDelete={this.handleRiverDelete}
+                        />
                     </div>
                 </div>
-
             </div>
         );
     }
-
 } //RiversMain
 
 export default Container.create(RiversInputForm);

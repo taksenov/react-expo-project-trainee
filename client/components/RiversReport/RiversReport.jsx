@@ -6,10 +6,10 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
-import MathAnalytics from '../MathAnalytics/MathAnalytics';
+import MathAnalytics from '../MathAnalytics';
 import AppConstants from '../../data/constants/AppConstants';
 
-import MessageForForm from '../MessageForForm/MessageForForm.jsx';
+import MessageForForm from '../MessageForForm';
 
 import './RiversReport.style.less';
 import 'react-select/dist/react-select.css';
