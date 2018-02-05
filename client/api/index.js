@@ -26,45 +26,36 @@ export default {
         return axios.get(`${apiPrefix}/rivers`);
     },
 
-    filterRiversWithYearRiver(filterYear,filterRiver) {
+    filterRiversWithYearRiver(filterYear, filterRiver) {
+        if (arguments.length === 0) return;
 
-        if (arguments.length===0) return;
-
-        return axios.get(`${apiPrefix}/filter-rivers-by-year-river`, 
-            {
-                params: {
-                    year: filterYear,
-                    river: filterRiver
-                }
+        return axios.get(`${apiPrefix}/filter-rivers-by-year-river`, {
+            params: {
+                year: filterYear,
+                river: filterRiver
             }
-        );
+        });
     }, //filterRiversWithYearRiver
 
-    getRiverData(year,typeRiver) {
-        
-        if (arguments.length===0) return;
+    getRiverData(year, typeRiver) {
+        if (arguments.length === 0) return;
 
-        return axios.get(`${apiPrefix}/get-river-data`, 
-            {
-                params: {
-                    year: year,
-                    typeRiver: typeRiver
-                }
+        return axios.get(`${apiPrefix}/get-river-data`, {
+            params: {
+                year: year,
+                typeRiver: typeRiver
             }
-        );
+        });
     }, //getRiverData
 
     filterRiversWithYear(filterYear) {
+        if (arguments.length === 0) return;
 
-        if (arguments.length===0) return;
-
-        return axios.get(`${apiPrefix}/filter-rivers-by-year`, 
-            {
-                params: {
-                    year: filterYear
-                }
+        return axios.get(`${apiPrefix}/filter-rivers-by-year`, {
+            params: {
+                year: filterYear
             }
-        );
+        });
     },
 
     createRiver(data) {
