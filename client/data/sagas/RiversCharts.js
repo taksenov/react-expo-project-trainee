@@ -53,6 +53,7 @@ function* onFetchCartsRequest() {
             handlePreparationForChart,
             riverDataFromAPI.data
         );
+        console.log(riverDataForChart);
         yield put(fetchChartsSuccess(riverDataForChart));
     } catch (error) {
         console.log(error);

@@ -6,6 +6,6 @@ export const {
     fetchChartsFailure
 } = createActions({
     FETCH_CHARTS_REQUEST: undefined,
-    FETCH_CHARTS_SUCCESS: ({ data }) => data,
+    FETCH_CHARTS_SUCCESS: undefined,
     FETCH_CHARTS_FAILURE: undefined
 });

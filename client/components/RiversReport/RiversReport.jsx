@@ -44,7 +44,7 @@ class RiversReport extends React.Component {
 
 const mapStateToProps = state => ({
     // isChartsFetching: getIsChartsFetching(state),
-    // chartData: getChartsData(state)
+    chartData: getChartsData(state)
 });
 
 const mapDispatchToProps = {

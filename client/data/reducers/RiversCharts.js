@@ -39,5 +39,5 @@ export default handleActions(
     }
 );
 // export const getUserLogin = state => state.charts.login;
-export const getChartsData = state => state.charts.data;
-export const getIsChartsFetching = state => state.charts.isChartsFetching;
+export const getChartsData = state => state.riversCharts.data;
+export const getIsChartsFetching = state => state.riversCharts.isChartsFetching;
