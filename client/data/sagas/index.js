@@ -1,6 +1,6 @@
 import { fork } from 'redux-saga/effects';
-import { riverChart } from './RiversCharts';
+import { fetchChartsWatch } from './RiversCharts';
 
 export default function*() {
-    yield fork(riverChart);
+    yield fork(fetchChartsWatch);
 }

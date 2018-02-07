@@ -6,6 +6,7 @@ import {
 } from '../actions/RiversCharts';
 // import { getUserLogin } from '../reducers/followers';
 import api from '../../api';
+import AppConstants from '../constants/AppConstants';
 
 function handlePreparationForChart(chartData) {
     if (arguments.length === 0) return;
@@ -41,6 +42,8 @@ function handlePreparationForChart(chartData) {
 } //handlePreparationForChart
 
 function* onFetchCartsRequest() {
+    const year = 2017;
+    const river = 'river_01';
     // const userToken = yield select(getUserLogin);
     // console.log(userToken);
     try {

@@ -61,7 +61,7 @@ class RiversCharts extends React.Component {
 
             try {
                 let riverDataNow = await dataFromRiver.getRiverData(
-                    year,
+                    lastYear,
                     'river_01'
                 );
                 changeState.datasets.push({

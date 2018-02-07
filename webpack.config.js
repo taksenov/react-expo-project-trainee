@@ -62,8 +62,8 @@ module.exports = {
             {
                 test: /\.jsx$/,
                 // loader: 'react-hot-loader!babel-loader',
-                // loader: 'react-hot-loader/webpack!babel-loader',
-                loader: 'babel-loader',
+                loader: 'react-hot-loader/webpack!babel-loader',
+                // loader: 'babel-loader',
                 exclude: [/node_modules/, /public/]
             },
             {
