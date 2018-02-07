@@ -49,13 +49,13 @@ class RiversCharts extends React.Component {
         let _this = this;
         let date = new Date();
         let year = date.getFullYear();
+        let lastYear = year - 1;
+        let lastTwoYear = year - 2;
 
         // IDEA: Получить данные для графика Ретроспектива по реке Обь за последние три года
         (async () => {
             let dataFromRiver = new DataFromRiver();
 
-            let lastYear = year - 1;
-            let lastTwoYear = year - 2;
             let changeState = {};
             changeState = JSON.parse(JSON.stringify(initialState));
 
@@ -153,7 +153,7 @@ class RiversCharts extends React.Component {
 
             try {
                 let riverDataNow = await dataFromRiver.getRiverData(
-                    year,
+                    lastYear,
                     'river_01'
                 ); //Обь
                 changeState.datasets.push({
@@ -169,7 +169,7 @@ class RiversCharts extends React.Component {
                     data: riverDataNow
                 });
                 let riverDataLast = await dataFromRiver.getRiverData(
-                    year,
+                    lastYear,
                     'river_02'
                 ); //Казым
                 changeState.datasets.push({
@@ -185,7 +185,7 @@ class RiversCharts extends React.Component {
                     data: riverDataLast
                 });
                 let riverDataLastTwo = await dataFromRiver.getRiverData(
-                    year,
+                    lastYear,
                     'river_03'
                 ); //Амня
                 changeState.datasets.push({

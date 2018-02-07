@@ -1,46 +1,43 @@
-//TODO: переписатиь как нужно, это пока заглушка
-
 import { handleActions } from 'redux-actions';
 import {
-    fetchFollowersRequest,
-    fetchFollowersSuccess,
-    fetchFollowersFailure
+    fetchChartsRequest,
+    fetchChartsSuccess,
+    fetchChartsFailure
 } from '../actions/RiversCharts';
 
 export default handleActions(
     {
-        [fetchFollowersRequest]: (state, { payload }) => ({
+        [fetchChartsRequest]: (state, { payload }) => ({
             ...state,
-            isFollowersFetching: true,
+            isChartsFetching: true,
             isFetched: false,
-            login: payload,
+            // login: payload,
             data: null,
             error: null
         }),
-        [fetchFollowersSuccess]: (state, { payload }) => ({
+        [fetchChartsSuccess]: (state, { payload }) => ({
             ...state,
-            isFollowersFetching: false,
+            isChartsFetching: false,
             isFetched: true,
             data: payload,
             error: null
         }),
-        [fetchFollowersFailure]: (state, { payload }) => ({
+        [fetchChartsFailure]: (state, { payload }) => ({
             ...state,
-            isFollowersFetching: false,
+            isChartsFetching: false,
             isFetched: true,
             data: null,
             error: payload
         })
     },
     {
-        isFollowersFetching: false,
+        isChartsFetching: false,
         isFetched: false,
-        login: null,
+        // login: null,
         data: null,
         error: null
     }
 );
-export const getUserLogin = state => state.followers.login;
-export const getFollowersData = state => state.followers.data;
-export const getIsFollowersFetching = state =>
-    state.followers.isFollowersFetching;
+// export const getUserLogin = state => state.charts.login;
+export const getChartsData = state => state.charts.data;
+export const getIsChartsFetching = state => state.charts.isChartsFetching;

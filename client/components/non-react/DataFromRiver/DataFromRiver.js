@@ -1,4 +1,5 @@
 import api from '../../../api';
+import AppConstants from '../../../data/constants/AppConstants';
 
 class DataFromRiver {
     handlePreparationForChart(chartData) {
